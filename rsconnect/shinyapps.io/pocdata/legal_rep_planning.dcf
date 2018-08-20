@@ -1,0 +1,12 @@
+name: legal_rep_planning
+title: legal_rep_planning
+username:
+account: pocdata
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 399455
+bundleId: 1533606
+url: https://pocdata.shinyapps.io/legal_rep_planning/
+when: 1534202481.80076
+asMultiple: FALSE
+asStatic: FALSE
