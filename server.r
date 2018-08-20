@@ -1,11 +1,4 @@
-library(ggplot2)
-library(feather)
-library(tidyr)
-library(lubridate)
-library(stringi)
-library(stringr)
-library(scales)
-source("helpers.R")
+
 
 function(input, output, session) {
   
@@ -116,7 +109,9 @@ function(input, output, session) {
            ,"</b>; <b>$648,000</b> for each half of the current biennium."
            ," By the end of the current month, we estimate that as much as <b>"
            ,scales::dollar(costs_as_of_month_end())
-           ,"</b> will have been expended. "
+           ,"</b> will have been expended, although this is probably an overestimate."
+           ," We only have 'real' data through the end of April 2018. Subsequent population data "
+           ,"have been projected using standard methods."
            ,"<p><p>"
            ,"With the assuptions below, we estimate the total cost of the pilot "
            ,"to be <b>" 
@@ -131,7 +126,7 @@ function(input, output, session) {
            ," chosen below."
            ,"<p><p>"
            ,"The assumptions for the pilot can be adjusted for each county below. "
-           ,"Once and assumption changes, the values and graphs in this application "
+           ,"Once an assumption changes, the values and graphs in this application "
            ,"will be automatically updated.")
     
   })

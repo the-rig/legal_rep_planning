@@ -1,8 +1,3 @@
-library(shiny)
-library(htmltools, lib.loc = "C:/Program Files/R/R-3.5.0/library")
-library(shinyWidgets)
-library(feather)
-library(dplyr)
 
 renderInputs <- function(prefix) {
   wellPanel(tags$h3(paste0(prefix, " County Assumptions")),
@@ -47,7 +42,7 @@ fluidPage(theme="simplex.min.css",
           
           # Application title
           tags$h2("When to stop the pilot?"),
-          #p("Simulating pilot costs using historical dependency data."),
+          p("Internal planning application - Please do not distribute"),
           hr(),
           p(htmlOutput("overall_text")),
           hr(),

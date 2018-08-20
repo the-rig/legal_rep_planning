@@ -5,8 +5,8 @@ account: pocdata
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 399455
-bundleId: 1533606
+bundleId: 1544684
 url: https://pocdata.shinyapps.io/legal_rep_planning/
-when: 1534202481.80076
+when: 1534781482.79058
 asMultiple: FALSE
 asStatic: FALSE

@@ -1,3 +1,14 @@
+library(shiny)
+library(htmltools)
+library(shinyWidgets)
+library(feather)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(lubridate)
+library(stringi)
+library(stringr)
+library(scales)
 
 paramNames <- c("salary", "caseload", "stop_date")
 
