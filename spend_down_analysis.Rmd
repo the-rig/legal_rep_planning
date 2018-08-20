@@ -1,11 +1,17 @@
 ---
 title: "Spend Down Analysis"
 author: "Joe Mienko"
-output:
-  html_document:
-    df_print: paged
+output: pdf_document
 bibliography: spend_down.bib
 ---
+
+```{r setup, include=FALSE}
+library(feather)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+knitr::opts_chunk$set(echo = TRUE, fig.pos = 'H')
+```
 
 ## Sources of Data
 
@@ -15,7 +21,7 @@ The data in this analysis draw from the FamLink data warehouse (FLDW) managed by
 
 We begin our analysis by establishing a population of placement episodes which is ostensibly court involved. This is accomplished by examining the most recent legal status of a given case (`tx_lgl_stat`), the discharge type  (`tx_dsch_rsn`), and a series of checks back to the `LEGAL` datamart of the FLDW (as represented by the `fl_dep_exist` flag). Wherever possible, all records in this analysis make use of the "base reporting tables" developed by the business intelligence team at DCYF. As can be seen, we are limiting this analysis to the counties of Grant and Lewis - the two "treatment" counties for the legal representation pilot. We also restrict the sample to children who were under the age of 18 at the point of removal. 
 
-```{sql base_table}
+```sql
 
 if object_id('tempdb..##court_episodes') is not null
     drop table ##court_episodes;
@@ -50,7 +56,7 @@ where rp.tx_county in ('Grant', 'Lewis')
 
 A critical component of this analysis concerns our expectations for the timing of permanency outcomes in the Counties of Grant and Lewis. There are a number of methods for making such estimates. However, in order to make use of the most recent data available for this analysis, we will employ a Kaplan-Meier estimator as implemented within the `survival` package by @Therneau2015. This is accomplished by establishing subsetting the temporary table defined above into a standard event-history table. 
 
-```{sql event_table}
+```sql
 select 
   rp.child id_prsn_child
   ,rp.removal_dt
@@ -68,7 +74,7 @@ where rp.removal_dt between '2010-01-01' and '2018-04-27'
 The survival curves generated from the `survival` package are plotted below. 
 
 ```{r plot_grant, include=TRUE, cache=TRUE}
-historical_surv_grant <- read_feather("/historical_surv_grant.feather")
+historical_surv_grant <- read_feather("historical_surv_grant.feather")
 
 median_loc_grant <- which.min(abs(historical_surv_grant$surv - .5)) 
 median_value_grant <- historical_surv_grant$surv[median_loc_grant]
@@ -131,7 +137,7 @@ The previous section can provide us with good information regarding how long we 
 
 The next chunk of code selects information (using the same temporary table as a starting point) concerning the monthly counts of entries and exits into dependency for Grant and Lewis. 
 
-```{sql stock_and_flow_data}
+```sql
 with calendar_dates as
 (
 select 
@@ -205,8 +211,7 @@ group by
 
 ```{r plot_flow_grant, include=TRUE, cache=TRUE, warning=FALSE, message=FALSE}
 
-dat_stock_and_flow <- write_feather(dat_stock_and_flow
-                                    ,"dat_stock_and_flow.feather")
+dat_stock_and_flow <- read_feather("dat_stock_and_flow.feather")
 
 
 flow_names <- list(
