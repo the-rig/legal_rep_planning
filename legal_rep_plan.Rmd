@@ -94,7 +94,7 @@ Starting in 2014, [13.34.100 RCW](http://app.leg.wa.gov/rcw/default.aspx?cite=13
 
 The DCLR pilot can be seen as an expansion of Washington's due-process protections for dependent youth. While the DCLR pilot is not permanent and not universal, it does represent a clear effort by the state legislature to expand due process rights for children involved in Washington's dependency courts. As with the post-termination legal counsel program described above, OCLA is also utilizing the SBLRF within the DCLR pilot. In other words, all attorneys hired to represent youth in the DCLR pilot will be trained and required to operate within the SBLRF. The general logic model for the SBLRF is outlined in Figure 1; a simplified version of the logic model described by @Orlebeke2016. 
 
-```{r fig1, engine = "tikz", engine.opts = list(template = "legal_rep_plan.tex"), fig.cap = "Washington Standards-Based Legal Representation Logic Model", results=TRUE, echo=FALSE, out.extra='', cache=TRUE}
+```{r fig1, engine = "tikz", engine.opts = list(template = "legal_rep_plan_head.tex"), fig.cap = "Washington Standards-Based Legal Representation Logic Model", results=TRUE, echo=FALSE, out.extra='', cache=TRUE}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,very thick,
 square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=white}]
   \tikzstyle{every state}=[fill=red,draw=none,text=white,minimum size=2.25cm]
@@ -130,7 +130,7 @@ As of the date of this writing, we do not have plans to perform any assessment o
 
 Figure 1 also constructs a series of dashed lines representing direct effects between constructs (in addition to the mediation effects implied by Figure 1). In this way we are proposing a more plausible partial mediation model; one in which direct and indirect effects exist [see @Baron1986 for a seminal treatment of this and related topics]. Figure 2 also adds a generic confounding variable ($C$) to make clear that several demographic factors (e.g. age at entry) likely exist which are related to attorney behaviors, process activities, and child outcomes. 
 
-```{r fig2, engine = "tikz", engine.opts = list(template = "legal_rep_plan.tex"), fig.cap = "Condensed Logic Model", results=TRUE, out.extra='', echo=FALSE, cache=TRUE}
+```{r fig2, engine = "tikz", engine.opts = list(template = "legal_rep_plan_head.tex"), fig.cap = "Condensed Logic Model", results=TRUE, out.extra='', echo=FALSE, cache=TRUE}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,very thick,
 square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=white}]
   \tikzstyle{every state}=[fill=red,draw=none,text=white,minimum size=1.5cm]
@@ -178,7 +178,7 @@ $T \to P$ & ${ B, C }$ \\ \bottomrule
 
 The theoretical graphs presented so far are purposely general to articulate our overall approach to determining which effects are identifiable in planned statistical analyses. Individual statistical models will require further refinement, particularly with respect to the inclusion of one or more confounding variables. For any given model, further graphical tests will be conducted to ensure that estimated effects are not influenced by spurious paths in the underlying theoretical model in a Simpson's paradox (see @Blyth1972 for a discussion of the paradox).
 
-```{r fig3, engine = "tikz", engine.opts = list(template = "legal_rep_plan.tex"), fig.cap = "Highlighted Effects", results=TRUE, echo=FALSE, out.extra='', cache=TRUE}
+```{r fig3, engine = "tikz", engine.opts = list(template = "legal_rep_plan_head.tex"), fig.cap = "Highlighted Effects", results=TRUE, echo=FALSE, out.extra='', cache=TRUE}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,
 square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=white}]
   \tikzstyle{every state}=[fill=red,draw=none,text=white,minimum size=1.5cm]
@@ -210,7 +210,7 @@ square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=
 
 Figure 4 provides a graphical outline of our data integration plan. As can be seen, data will be integrated from multiple sources. Our current plans are to have data linkages conducted in two steps. The first step will involve the WSCCR receiving data from the identified sources in the Figure. Using a probabilistic matching algorithm, WSCCR will integrate the data sources and provide a linking file, along with identifying information. This linking file will then be integrated using a deterministic algorithm developed by OSPI to CEDARS data. Separate from the exchange of data with OSPI, WSCCR will send a separate series of files to the research team. The data sent to the research team will have identifying information removed. Similarly, once OSPI has completed their integration, a separate de-identified file will be transmitted to the research team. All files submitted to the research team will contain a FamLink person ID. The FamLink person ID will be used to link data received from OSPI and WSCCR. This ID will also be used by the research team to integrate with the limited set of FamLink data warehouse (FLDW) records held by the research team under a separate data sharing agreement. 
 
-```{r fig4, engine = "tikz",  engine.opts = list(template = "legal_rep_plan.tex"), results=TRUE, echo=FALSE, fig.cap = "Data Linkage Plan"}
+```{r fig4, engine = "tikz",  engine.opts = list(template = "legal_rep_plan_head.tex"), results=TRUE, echo=FALSE, fig.cap = "Data Linkage Plan", cache=TRUE}
 
 \makeatother
 \begin{tikzpicture}[
