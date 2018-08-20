@@ -1,0 +1,285 @@
+---
+title: "Assessment of the Dependent Child Legal Representation Pilot"
+author: "Joe Mienko"
+header-includes:
+   - \usepackage{pgf}
+   - \usepackage{tikz}
+   - \usetikzlibrary{automata, shapes, shadows, arrows, calc, shapes.geometric}
+   - \usepackage[utf8]{inputenc}
+   - \usepackage{booktabs}
+   - \usepackage{makecell} 
+   - \usepackage{float} 
+   - \usepackage{newlfont}
+output: pdf_document
+bibliography: legal_rep_plan.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.pos = 'H')
+```
+
+# Purpose and Conceptual Rationale
+
+## Background and Significance 
+
+For over half a century, juvenile *delinquency* courts in the United States (US) have recognized a child's right to due process within the juvenile justice system. Beginning with @InReGault, the US Supreme Court ruled that children within the juvenile justice system have many of the same rights as adults, including a right to counsel. Federal guidance related to children's due process rights within *dependency* proceedings is somewhat less clear. Although federal statute requires that states develop procedures for the appointment of a Guardian ad Litem (GAL) in dependency cases, there is no requirement that the GAL be an attorney (in many jurisdictions, this requirement is frequently met with a volunteer Court Appointed Special Advocate (CASA)). Furthermore, GALs are appointed to represent the *best interests* of the child as compared to delinquency cases where counsel typically represents the child's *stated interest* [(42 U.S.C. §5106a(b)(2)(A)(xiii))](http://uscode.house.gov/view.xhtml?req=(title:42%20section:5106a%20edition:prelim)). 
+
+While best-interest representation may be desirable in some cases, such representation may tend to overshadow a child's personal interests. Recent survey results of dependent children in Washington State are consistent with this thinking. Specifically, @Levezu2018 found that 84% of dependent child respondents who had been assigned *both* a GAL and a stated-interest attorney also reported that their opinions had been shared in court. In cases where only a GAL had been assigned, 20% of the respondents reported having their opinions shared. 
+
+In response to the national and local dialogue referenced above, in 2017, Washington enacted [2nd Engrossed Substitute Bill 5890](http://apps2.leg.wa.gov/billsummary?BillNumber=5890&Year=2017&BillNumber=5890&Year=2017). Among other things, this law appropriated funds...
+
+> ...to the office of civil legal aid [OCLA]...for the office to provide legal representation for foster children in two counties at the initial shelter care hearing in dependency proceedings... 
+
+In other words, the legislature required OCLA to pilot universal legal representation for dependent children in two counties. In addition to authorizing the pilot, the legislature also appropriated funds to support an evaluation of the pilot focused on the experiences of children who are represented as a result of the pilot, and those who are not. The law requires that the pilot specifically focus on 
+
+> ...[t]he time to achieve permanency and permanency outcomes;...[e]ducational, social, or other relevant child welfare indicators as determined relevant by the center including, but not limited to, relevant child welfare indicators identified through consultation with foster children, youth, and other stakeholders involved in the research assessment. The assessment must also identify and project cost savings to the state, if any, as a result of providing legal representation for children at the shelter care hearing.
+
+Thus, this project is an effort by the legislature to expand due process rights for dependent youth in Washington, while simultaneously quantifying the impact that such an expansion might have across multiple domains. 
+
+\newpage
+## Research Questions
+
+Similar to the QIC-ChildRep intervention described by @Orlebeke2016, the underlying logic of the Dependent Child Legal Representation (DCLR) pilot is that dependent children lack trained and effective legal advocacy within the dependency system. As described below, the QIC-ChildRep pilot has previously assessed the efficacy of the type of standards-based legal representation involved in the DCLR pilot. In other words, this pilot is not focused on whether or not the type of legal representation provided in the pilot is preferable to another model of representation. Rather, the overarching research question under consideration in this study is whether or not the presence of DCLR is beneficial to dependent children, as compared to current systems of advocacy and representation in Washington. 
+
+As outlined in Figures 1-3 below, the study will proceed by measuring two categories of dependent measures which exist in the theoretical model under consideration. These measures include process measures ($P$), and child outcomes ($O$). The logic of the DCLR pilot is that measures in both categories are impacted, directly or indirectly, by the assignment of a trained attorney ($T$). Thus, the two overarching research questions in this study are 
+
+1. What effect does the provision of trained, standards-based attorneys to dependent youth have on the dependency processes?, and 
+
+2. What effect does the provision of trained, standards-based attorneys to dependent youth have on child outcomes?
+
+The specific process measures identified for inclusion in this study are as follows: 
+
+* Trust in Attorney	Process
+* Perceived Information Sharing	Process
+* Perceived Voice in Court Hearings	Process
+
+The specific outcome measures identified for inclusion in this study are as follows: 
+
+* Suspension/Expulsion Rate
+* Grade Point Average
+* Truancy Rate
+* Status Offense Rate
+* 4th Grade Reading Proficiency Rate
+* 12 Month Permanency Rate
+* 24 Month Permanency Rate
+* Continuity Rate
+* Turnover Rate
+* Student Flow
+* Placement Move Rate
+* Institutional Placement Rate
+* Relative Placement Rate
+* Hope Bed Placement Rate
+* Runaway Rate
+* Average Runaway Days
+* Medical Home Rate
+* Early-Intervention Service Rate
+* Child Reported Parent Visit Rate
+* Child Reported Sibling Visit Rate
+* Child Reported Timing of First Visit
+* Child Reported Visit Frequency
+
+## Literature
+
+There is a paucity of peer-reviewed literature examining the legal representation of dependent children, and until recently, the field lacked consensus regarding legal practice standards for child representation in dependency proceedings. In 2009, in an effort to establish such standards, Children's Bureau (CB) established a National Quality Improvement Center on the Representation of Children in the Child Welfare System (QIC-ChildRep). Housed at the University of Michigan Law School, QIC-ChildRep formalized a best-practice model for stated-interest legal representation in dependency proceedings. This model was evaluated using randomized controlled trials in Washington and Georgia. Results of the Washington evaluation suggest that, relative to children who were represented by lawyers with no specialized training, children receiving representation under the best-practice model had a higher rate of early exits from foster care. Additionally, best-practice attorneys were found to have more contact with foster parents and other substitute caregivers. Cases in which best-practice attorneys were assigned were also more likely to have utilized non-adversarial case resolution options, including family team decision-making meetings (FTDMs) [@Orlebeke2016]. The American Bar Association (ABA) has since adopted this model as the recommended standard in juvenile dependency proceedings [@Lehrmann2010].  
+
+While @Orlebeke2016 demonstrated some benefits from the use of the best-practice attorneys as compared to untrained attorneys, the QIC-ChildRep evaluation did not answer a more basic question: does the presence of stated-interest attorneys benefit children compared to the counterfactual condition of no attorney? While the literature is similarly silent on this question, @Zinn2015 recently published findings of the Foster Children's Project (FCP) of the Legal Aid Society of Palm Beach County, Florida; a project in which children placed in foster care from July 2001 to December of 2004 were provided stated-interest counsel for the duration of their dependency cases. While this study predates the establishment of the QIC-ChildRep model (i.e. there was no specific practice model utilized by attorneys in the FCP pilot), the findings of the study suggest that children with stated-interest legal representation achieve permanency more quickly than children without representation. 
+
+As should be obvious based on the outcome measures listed above, the current study has a much broader outcome focus than previous studies. From a research perspective, a more expansive focus is valuable given the underdeveloped nature of this domain of child welfare research. Exploratory analyses which describe the relationship between DCLR and a wide range of outcomes will be helpful to future, more targeted research endeavors. The expansive list of process and outcome measures is also important for policy makers who have to contend with multiple constituents who care about more than the traditional child welfare metrics which tend to pervade child welfare literature (e.g. risk of referral, timing of permanency outcomes). Finally, traditional benefit-cost analysis (BCA) (a requirement of the statute appropriating funds for this project) requires the amortization of benefits and costs across a wide range of outcomes. While such calculations are often made by inferring the likelihood of outcomes based on population-based data or other sources, gathering this data from an actuarial perspective (i.e. using administrative data with actual outcomes), will allow us to conduct BCA calculations with much more precision than what is typically possible in the BCA literature. 
+
+## Dependent Child Legal Represenation Pilot Evaluation
+
+As can be inferred from the above, Washington currently has no universal requirements for the appointment of attorneys prior to terminating the parent-child relationship. Some Washington jurisdictions voluntarily appoint counsel to children once they reach a particular age. This flexibility is allowed under [13.34.100 RCW](http://app.leg.wa.gov/rcw/default.aspx?cite=13.34.100), which also allows a child in *any* jurisdiction to request appointment of counsel and requires that dependent children be regularly notified of their right to request counsel after the age of 12. 
+
+Starting in 2014, [13.34.100 RCW](http://app.leg.wa.gov/rcw/default.aspx?cite=13.34.100) was also amended to require the appointment of counsel to *all* dependent children who remain in care with "...no remaining parent with parental rights for six months or longer..." Since 2014, the provision of post-termination legal counsel has been implemented by the Office of Civil Legal Aid (OCLA). All attorneys appointed under this program are also trained under Washington's standards-based legal representation framework (SBLRF), which is based on the QIC-ChildRep model. 
+
+The DCLR pilot can be seen as an expansion of Washington's due-process protections for dependent youth. While the DCLR pilot is not permanent and not universal, it does represent a clear effort by the state legislature to expand due process rights for children involved in Washington's dependency courts. As with the post-termination legal counsel program described above, OCLA is also utilizing the SBLRF within the DCLR pilot. In other words, all attorneys hired to represent youth in the DCLR pilot will be trained and required to operate within the SBLRF. The general logic model for the SBLRF is outlined in Figure 1; a simplified version of the logic model described by @Orlebeke2016. 
+
+```{r fig1, engine = "tikz", engine.opts = list(template = "legal_rep_plan.tex"), fig.cap = "Washington Standards-Based Legal Representation Logic Model", results=TRUE, echo=FALSE, out.extra='', cache=TRUE}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,very thick,
+square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=white}]
+  \tikzstyle{every state}=[fill=red,draw=none,text=white,minimum size=2.25cm]
+
+  \node[square]         (A)              {\makecell[c]{Training\\$(T)$}};
+  \node[state]          (B) [right of=A] {\makecell[c]{Skill\\$(S)$}};
+  \node[state]          (C) [above of=B] {\makecell[c]{Knowledge\\$(K)$}};
+  \node[state]          (D) [below of=B] {\makecell[c]{Attitude\\$(A)$}};
+  \node[square]         (E) [right of=B] {\makecell[c]{Behaviors\\$(B)$}};
+  \node[square]         (F) [right of=E] {\makecell[c]{Processes\\$(P)$}};
+  \node[square]         (G) [right of=F] {\makecell[c]{Outcomes\\$(O)$}};
+
+  \path (A)    edge              node {} (B)
+               edge              node {} (C)
+               edge              node {} (D)
+        (B)    edge              node {} (E)
+        (C)    edge              node {} (E)
+        (D)    edge              node {} (E)
+        (E)    edge              node {} (F)
+        (F)    edge              node {} (G);
+      
+\end{tikzpicture}
+```
+
+Figure 1 follows the tradition of structural equation modeling literature in which manifest variables (i.e. things we directly observe) are drawn as squares, and latent variables (i.e. things we observe indirectly) are drawn as circles. Of particular importance to the current discussion is the learning that takes place as the result of the standards-based training  (i.e. changes to an attorney's knowledge, skill, and attitude). As outlined by @Orlebeke2016, learning that takes place across these constructs is hypothesized to change attorney behaviors. Further down the "causal" chain, we see that these behaviors are also believed to impact court processes, which in turn impact child outcomes. 
+
+\newpage
+# Study Design
+
+## Conceptual Model
+
+As of the date of this writing, we do not have plans to perform any assessment of how attorney knowledge, skill, or attitude may have been impacted by the standards-based legal training utilized in Washington. As described above, much of the training has been previously evaluated via the QIC-ChildRep program. Our focus in the current project will be on the impact of standards-based legal representation on attorney behaviors, case processes, and child outcomes. While we recognize that knowledge, skill, and attitude (KSA) still play a role in our program model (and a role in the types of questions we can reasonably ask in this study), we will not be engaged in data collection efforts regarding these constructs. Figure 2 collapses these constructs into a single latent variable as shown below in the condensed logic model (i.e. directed acyclic graph (DAG)). Similarly, although we will be collecting information on attorney behaviors ($B$) in this study for the purpose of control measures, we will not examining these behaviors as a primary predictor of interest. 
+
+Figure 1 also constructs a series of dashed lines representing direct effects between constructs (in addition to the mediation effects implied by Figure 1). In this way we are proposing a more plausible partial mediation model; one in which direct and indirect effects exist [see @Baron1986 for a seminal treatment of this and related topics]. Figure 2 also adds a generic confounding variable ($C$) to make clear that several demographic factors (e.g. age at entry) likely exist which are related to attorney behaviors, process activities, and child outcomes. 
+
+```{r fig2, engine = "tikz", engine.opts = list(template = "legal_rep_plan.tex"), fig.cap = "Condensed Logic Model", results=TRUE, out.extra='', echo=FALSE, cache=TRUE}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,very thick,
+square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=white}]
+  \tikzstyle{every state}=[fill=red,draw=none,text=white,minimum size=1.5cm]
+
+  \node[square]         (T)              {\makecell[c]{$T$}};
+  \node[state]          (KSA) [right of=T] {\makecell[c]{$KSA$}};
+  \node[square]         (B) [right of=KSA] {\makecell[c]{$B$}};
+  \node[square]         (P) [right of=B] {\makecell[c]{$P$}};
+  \node[square]         (O) [right of=P] {\makecell[c]{$O$}};
+  \node[square, node distance=2cm]          (C) [above of=P] {\makecell[c]{$C$}};
+
+  \path (T)    edge              node {} (KSA)
+               edge [bend right, dashed] node {} (B)
+               edge [bend right, dashed] node {} (P)
+               edge [bend right, dashed] node {} (O)
+        (C)   edge [dashed] node {} (B)
+               edge [dashed] node {} (P)
+               edge [dashed] node {} (O)               
+        (KSA)  edge              node {} (B)
+        (B)    edge              node {} (P)
+               edge [bend left=90, dashed] node {} (O)
+        (P)    edge              node {} (O);
+      
+\end{tikzpicture}
+```
+
+\newpage
+
+## Identifiable Effects
+
+Using Figure 2 as a foundation, we next follow @Pearl1988 to determine which "effects" in our model will be "identified" in subsequent statistical analyses. Specifically, we follow Pearl's $d$-separation criterion as implemented in @dagitty2016. In brief, $d$-separation is a process through which a researcher can locate conditionally independent sets in diagrams such as the one outlined in Figure 2. This foundational step is important as it allows us to determine which relationships have a meaningful interpretation given our theoretical understanding represented in Figures 1 and 2. The results of this analysis are outlined in Table 1 and Figure 3. Table 1 shows each identifiable effect and the control variables required to estimate the effect. Figure 3 highlights these effects with solid black paths. The effects along dashed paths have been determined to be unidentified (e.g. $C \to B$), not of substantive interest (e.g. $C \to B$), or not measured (e.g. $KSA \to B$) in the current project.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{@{}cc@{}}
+\toprule
+Identifiable Effect & Required Control Variables \\ \midrule
+$P \to O$ & ${ B, C, T }$ \\
+$T \to O$ & ${ B, C, P }$ \\
+$T \to P$ & ${ B, C }$ \\ \bottomrule
+\end{tabular}
+\caption{Relevant \& Identifiable Effects}
+\label{tbl1}
+\end{table}
+
+The theoretical graphs presented so far are purposely general to articulate our overall approach to determining which effects are identifiable in planned statistical analyses. Individual statistical models will require further refinement, particularly with respect to the inclusion of one or more confounding variables. For any given model, further graphical tests will be conducted to ensure that estimated effects are not influenced by spurious paths in the underlying theoretical model in a Simpson's paradox (see @Blyth1972 for a discussion of the paradox).
+
+```{r fig3, engine = "tikz", engine.opts = list(template = "legal_rep_plan.tex"), fig.cap = "Highlighted Effects", results=TRUE, echo=FALSE, out.extra='', cache=TRUE}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,
+square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=white}]
+  \tikzstyle{every state}=[fill=red,draw=none,text=white,minimum size=1.5cm]
+
+  \node[square]         (T)              {\makecell[c]{$T$}};
+  \node[state]          (KSA) [right of=T] {\makecell[c]{$KSA$}};
+  \node[square]         (B) [right of=KSA] {\makecell[c]{$B$}};
+  \node[square]         (P) [right of=B] {\makecell[c]{$P$}};
+  \node[square]         (O) [right of=P] {\makecell[c]{$O$}};
+  \node[square, node distance=2cm]          (C) [above of=P] {\makecell[c]{$C$}};
+
+  \path (T)    edge [line width=.75mm, gray, dashed] node {} (KSA)
+               edge [bend right, line width=.75mm, gray, dashed] node {} (B)
+               edge [bend right, line width=.75mm] node {} (P)
+               edge [bend right, line width=.75mm] node {} (O)
+        (C)   edge [line width=.75mm, gray, dashed] node {} (B)
+               edge [line width=.75mm, gray, dashed] node {} (P)
+               edge [line width=.75mm, gray, dashed] node {} (O)               
+        (KSA)  edge [line width=.75mm, gray, dashed] node {} (B)
+        (B)    edge [line width=.75mm, gray, dashed] node {} (P)
+               edge [bend left=90, line width=.75mm, gray, dashed] node {} (O)
+        (P)    edge [line width=.75mm]             node {} (O);
+      
+\end{tikzpicture}
+```
+
+\newpage
+## Data Integration
+
+Figure 4 provides a graphical outline of our data integration plan. As can be seen, data will be integrated from multiple sources. Our current plans are to have data linkages conducted in two steps. The first step will involve the WSCCR receiving data from the identified sources in the Figure. Using a probabilistic matching algorithm, WSCCR will integrate the data sources and provide a linking file, along with identifying information. This linking file will then be integrated using a deterministic algorithm developed by OSPI to CEDARS data. Separate from the exchange of data with OSPI, WSCCR will send a separate series of files to the research team. The data sent to the research team will have identifying information removed. Similarly, once OSPI has completed their integration, a separate de-identified file will be transmitted to the research team. All files submitted to the research team will contain a FamLink person ID. The FamLink person ID will be used to link data received from OSPI and WSCCR. This ID will also be used by the research team to integrate with the limited set of FamLink data warehouse (FLDW) records held by the research team under a separate data sharing agreement. 
+
+```{r fig4, engine = "tikz",  engine.opts = list(template = "legal_rep_plan.tex"), results=TRUE, echo=FALSE, fig.cap = "Data Linkage Plan"}
+
+\makeatother
+\begin{tikzpicture}[
+    font=\sffamily,
+  every matrix/.style={ampersand replacement=\&,column sep=2cm,row sep=2cm},
+  source/.style={draw=none,thick,rounded corners,fill=red,inner sep=.3cm,text=white},
+  process/.style={draw=none,thick,circle,fill=blue, minimum size=2cm, text=white},
+  sink/.style={source,fill=black!60!green,draw=none,text=white},
+  datastore/.style={draw=gray,very thick,shape=datastore,inner sep=.3cm, text=gray},
+  dots/.style={gray,scale=2},
+  to/.style={->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize,line width=.5mm,gray},
+  every node/.style={align=center}]
+
+  % Position the nodes using a matrix layout
+  \matrix{
+    \node[source] (scomis) {SCOMIS};
+        \& \node[source] (ocla) {OCLA\\Attorney Surveys};
+        \& \node[source] (cita_data) {OCLA\\Training DB};
+        \& \node[source] (famlink) {FamLink}; 
+        \& \node[source, fill=uw_purple, draw=uw_gold, line width=.5mm] (redcap) {Youth Survey\\@UW}; \& \\
+        \& 
+        \& \node[process] (wsccr_link) {WSCCR \\ $\bowtie$};  \& \\
+        \&
+        \& \node[datastore] (buffer1) {secure \\ store 1}; 
+        \& \node[datastore] (buffer2) {secure \\ store 2}; 
+        \& \node[sink] (datastore) {PROJECT-DB}; \& \\
+        \& \node[source] (cedars) {CEDARS};
+        \& \node[process] (ospi_link) {OSPI \\ $\bowtie$}; \&
+        \& \node[source, fill=uw_purple, draw=uw_gold, line width=.5mm] (uw_core_data) {Limited FLDW\\@UW}; \\ 
+  };
+
+  % Draw the arrows between the nodes and label them.
+  \draw[to] (scomis) -- node[midway,above] {}
+      node[midway,below] {} (wsccr_link);
+  \draw[to] (ocla) -- node[midway,above] {}
+      node[midway,below] {} (wsccr_link);
+  \draw[to] (famlink) -- node[midway,above] {}
+      node[midway,below] {} (wsccr_link);
+  \draw[to] (cita_data) -- node[midway,above] {}
+      node[midway,below] {} (wsccr_link);
+  \draw[to] (redcap) -- node[midway,above] {}
+      node[midway,below] {} (wsccr_link);
+  \draw[to] (wsccr_link) -- 
+      node[midway,right] {PK \& \\Identifying Fields \\ via SSH} (buffer1);
+  \draw[to] (wsccr_link) to[bend left=45] 
+      node[anchor=center, above right, midway] {PK \& \\Non-Identifying \\ Fields via SSH} (buffer2);
+  \draw[to] (buffer1) --
+      node[midway,right] {SSH\\File Access} (ospi_link);
+  \draw[to] (cedars) -- node[midway,above] {}
+      node[midway,below] {} (ospi_link);
+  \draw[to] (ospi_link) to[bend right=45] node[gray,anchor=center, below right, midway] {PK \& \\Non-Identifying \\ Fields via SSH}
+      node[midway,below] {} (buffer2);
+  \draw[to] (buffer2) --
+      node[midway,above] {SSH\\File Access} (datastore);
+  \draw[to] (uw_core_data) -- 
+      node[midway,right] {SSH\\File Access} (datastore);
+
+\end{tikzpicture}
+```
+
+## Primary Objectives
+
+## Use of Comparison Groups
+
+## Sampling Plan
+
+## Major Variables of Interest
+
+## Statistical Analyses
+
+\newpage
+# References
