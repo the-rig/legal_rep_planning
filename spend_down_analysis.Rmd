@@ -2,7 +2,7 @@
 title: "Spend Down Analysis"
 author: "Joe Mienko"
 output: pdf_document
-bibliography: spend_down.bib
+bibliography: spend_down_analysis.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -116,15 +116,15 @@ ggplot(historical_surv_lewis
        ,aes(y = surv
             ,x = time)) + 
   geom_line(colour = "blue", linetype = "dashed") + 
-  ggplot2::geom_vline(xintercept = median_days_grant) + 
-  ggplot2::geom_hline(yintercept = round(median_value_grant, 2)) +   
-  geom_text(aes(median_days_grant*2
-                ,median_value_grant
-                ,label = median_label_grant
+  ggplot2::geom_vline(xintercept = median_days_lewis) + 
+  ggplot2::geom_hline(yintercept = round(median_value_lewis, 2)) +   
+  geom_text(aes(median_days_lewis*2
+                ,median_value_lewis
+                ,label = median_label_lewis
                 ,vjust = -1)) + 
   ylab("Percent Remaining in Dependency") + 
   xlab("Days Since Entry") + 
-  ggtitle("Timing of Dependency Exits since 2010, Grant County") + 
+  ggtitle("Timing of Dependency Exits since 2010, Lewis County") + 
   theme_bw()
 
 ```
