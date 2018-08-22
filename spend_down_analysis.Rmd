@@ -28,27 +28,32 @@ if object_id('tempdb..##court_episodes') is not null
 
 select 
   * 
+  ,case
+    when lf_dt is not null
+      then lf_dt
+    else discharge_dt
+  end discharge_from_pilot
 into ##court_episodes
 from base.rptPlacement rp
 where rp.tx_county in ('Grant', 'Lewis')
   and dbo.fnc_datediff_yrs(birthdate, removal_dt) < 18
   and (tx_lgl_stat in 
-    ('Closed - Adoption'
-    ,'Closed - Dependency Guardianship No Supv'
-    ,'Closed - Superior Court Guardianship'
-    ,'Closed - Title 13 Guardianship'
-    ,'Closed -Non-parental (3rd party) custody'
-    ,'Dependency Guardianship'
-    ,'Dependent'
-    ,'Dependent - Legally Free'
-    ,'EFC Dependent'
-    ,'Non-parental (3rd Party) custody'
-    ,'Parental Custody -Continued Court Action'
-    ,'Protective Custody'
-    ,'Shelter Care'
-    ,'Superior Court Guardianship')
-  or tx_dsch_rsn = 'Returned to Custody of Parents - Dependency Dismissed'
-  or fl_dep_exist = 1)
+      ('Closed - Adoption'
+      ,'Closed - Dependency Guardianship No Supv'
+      ,'Closed - Superior Court Guardianship'
+      ,'Closed - Title 13 Guardianship'
+      ,'Closed -Non-parental (3rd party) custody'
+      ,'Dependency Guardianship'
+      ,'Dependent'
+      ,'Dependent - Legally Free'
+      ,'EFC Dependent'
+      ,'Non-parental (3rd Party) custody'
+      ,'Parental Custody -Continued Court Action'
+      ,'Protective Custody'
+      ,'Shelter Care'
+      ,'Superior Court Guardianship')
+    or tx_dsch_rsn = 'Returned to Custody of Parents - Dependency Dismissed'
+    or fl_dep_exist = 1)
 
 ```
 
@@ -57,18 +62,22 @@ where rp.tx_county in ('Grant', 'Lewis')
 A critical component of this analysis concerns our expectations for the timing of permanency outcomes in the Counties of Grant and Lewis. There are a number of methods for making such estimates. However, in order to make use of the most recent data available for this analysis, we will employ a Kaplan-Meier estimator as implemented within the `survival` package by @Therneau2015. This is accomplished by establishing subsetting the temporary table defined above into a standard event-history table. 
 
 ```sql
+
 select 
   rp.child id_prsn_child
   ,rp.removal_dt
-	,iif(rp.discharge_dt = '9999-12-31', '2018-04-27', rp.discharge_dt) discharge_dt
-	,iif(rp.discharge_dt = '9999-12-31', null, rp.discharge_dt) discharge_dt_null
-	,iif(rp.discharge_dt = '9999-12-31', 0, 1) fl_discharge
-	,datediff(dd, rp.removal_dt, 
-   iif(rp.discharge_dt = '9999-12-31', '2018-04-27', rp.discharge_dt)) + 1 los
+  ,iif(rp.discharge_from_pilot = '9999-12-31', '2018-04-27'
+    ,rp.discharge_from_pilot) discharge_dt
+  ,iif(rp.discharge_from_pilot = '9999-12-31', null
+    ,rp.discharge_from_pilot) discharge_dt_null
+  ,iif(rp.discharge_from_pilot = '9999-12-31', 0, 1) fl_discharge
+  ,datediff(dd, rp.removal_dt, 
+  iif(rp.discharge_dt = '9999-12-31', '2018-04-27', rp.discharge_from_pilot)) + 1 los
   ,rp.id_case
   ,rp.tx_county 
 from ##court_episodes rp
 where rp.removal_dt between '2010-01-01' and '2018-04-27'
+
 ```
 
 The survival curves generated from the `survival` package are plotted below. 
@@ -150,8 +159,10 @@ where cd.calendar_date between '2000-01-01' and '2018-04-27'
 select 
 	rp.removal_dt
 	,id_removal_episode_fact
-	,iif(rp.discharge_dt = '9999-12-31', '2018-04-27', rp.discharge_dt) discharge_dt
-	,iif(rp.discharge_dt = '9999-12-31', null, rp.discharge_dt) discharge_dt_null
+	,iif(rp.discharge_from_pilot = '9999-12-31', '2018-04-27'
+	  ,rp.discharge_from_pilot) discharge_dt
+	,iif(rp.discharge_from_pilot = '9999-12-31', null
+	  ,rp.discharge_from_pilot) discharge_dt_null
   ,rp.tx_county 
 from ##court_episodes rp
   where rp.tx_county in ('Grant', 'Lewis')
