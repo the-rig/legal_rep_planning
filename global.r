@@ -47,10 +47,10 @@ next_month_name <- ymd(paste0(year(today())
            ,"01"))
 
 #vector of months 
-months_into_pilot <- 1:72
+months_into_pilot <- 1:70
 
 #vector of month names all
-month_name <- seq(lubridate::ymd(20170701), by = "month", length.out = 72)
+month_name <- seq(lubridate::ymd(20170901), by = "month", length.out = 70)
 
 #vector of month names for predictions
 month_name_pred <- seq(from = as.Date("2018/4/1"), to = as.Date("2023/6/1"), by = "month")
@@ -65,7 +65,7 @@ vector_search <- function(n, times){
 
 build_point_estimates_lewis <- function(stop_date = 20180901, caseload = 60, salary = 120000) {
   
-  historical_survival_locations <- as.numeric(lapply(X = 1:72
+  historical_survival_locations <- as.numeric(lapply(X = 1:70
                                                      ,FUN = vector_search
                                                      ,times = all_data %>%
                                                        .$historical_surv_lewis.feather %>%
@@ -80,13 +80,13 @@ build_point_estimates_lewis <- function(stop_date = 20180901, caseload = 60, sal
   
   entries_actual <- dplyr::filter(all_data$dat_stock_and_flow.feather
                            ,tx_county == "Lewis"
-                           ,month >= lubridate::ymd(20170701)) %>%
+                           ,month >= lubridate::ymd(20170901)) %>%
     mutate(month = lubridate::as_date(month, tz = "UTC")) %>%
     select(month, total_inflow_of_placements)
   
   exits_actual <- dplyr::filter(all_data$dat_stock_and_flow.feather
                          ,tx_county == "Lewis"
-                         ,month >= lubridate::ymd(20170701)) %>%
+                         ,month >= lubridate::ymd(20170901)) %>%
     mutate(month = lubridate::as_date(month, tz = "UTC")) %>%
     select(month, total_outflow_of_placements)
   
@@ -144,7 +144,7 @@ build_point_estimates_lewis <- function(stop_date = 20180901, caseload = 60, sal
 
 build_point_estimates_grant <- function(stop_date = 20180901, caseload = 60, salary = 120000) {
   
-  historical_survival_locations <- as.numeric(lapply(X = 1:72
+  historical_survival_locations <- as.numeric(lapply(X = 1:70
                                                      ,FUN = vector_search
                                                      ,times = all_data %>%
                                                        .$historical_surv_grant.feather %>%
@@ -159,13 +159,13 @@ build_point_estimates_grant <- function(stop_date = 20180901, caseload = 60, sal
   
   entries_actual <- dplyr::filter(all_data$dat_stock_and_flow.feather
                            ,tx_county == "Grant"
-                           ,month >= lubridate::ymd(20170701)) %>%
+                           ,month >= lubridate::ymd(20170901)) %>%
     mutate(month = lubridate::as_date(month, tz = "UTC")) %>%
     select(month, total_inflow_of_placements)
   
   exits_actual <- dplyr::filter(all_data$dat_stock_and_flow.feather
                          ,tx_county == "Grant"
-                         ,month >= lubridate::ymd(20170701)) %>%
+                         ,month >= lubridate::ymd(20170901)) %>%
     mutate(month = lubridate::as_date(month, tz = "UTC")) %>%
     select(month, total_outflow_of_placements)
   
