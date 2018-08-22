@@ -19,42 +19,47 @@ if object_id('tempdb..##court_episodes') is not null
     drop table ##court_episodes;
 
 select 
-  * 
+* 
+,case
+when lf_dt is not null
+then lf_dt
+else discharge_dt
+end discharge_from_pilot
 into ##court_episodes
 from base.rptPlacement rp
 where rp.tx_county in ('Grant', 'Lewis')
-  and dbo.fnc_datediff_yrs(birthdate, removal_dt) < 18
-  and (tx_lgl_stat in 
-    ('Closed - Adoption'
-    ,'Closed - Dependency Guardianship No Supv'
-    ,'Closed - Superior Court Guardianship'
-    ,'Closed - Title 13 Guardianship'
-    ,'Closed -Non-parental (3rd party) custody'
-    ,'Dependency Guardianship'
-    ,'Dependent'
-    ,'Dependent - Legally Free'
-    ,'EFC Dependent'
-    ,'Non-parental (3rd Party) custody'
-    ,'Parental Custody -Continued Court Action'
-    ,'Protective Custody'
-    ,'Shelter Care'
-    ,'Superior Court Guardianship')
-  or tx_dsch_rsn = 'Returned to Custody of Parents - Dependency Dismissed'
-  or fl_dep_exist = 1)")
+and dbo.fnc_datediff_yrs(birthdate, removal_dt) < 18
+and (tx_lgl_stat in 
+('Closed - Adoption'
+,'Closed - Dependency Guardianship No Supv'
+,'Closed - Superior Court Guardianship'
+,'Closed - Title 13 Guardianship'
+,'Closed -Non-parental (3rd party) custody'
+,'Dependency Guardianship'
+,'Dependent'
+,'Dependent - Legally Free'
+,'EFC Dependent'
+,'Non-parental (3rd Party) custody'
+,'Parental Custody -Continued Court Action'
+,'Protective Custody'
+,'Shelter Care'
+,'Superior Court Guardianship')
+or tx_dsch_rsn = 'Returned to Custody of Parents - Dependency Dismissed'
+or fl_dep_exist = 1)")
 
 # Event Table
 
 dat_historical_events <- DBI::dbGetQuery(conn = con
 ,"select 
   rp.child id_prsn_child
-  ,rp.removal_dt
-	,iif(rp.discharge_dt = '9999-12-31', '2018-04-27', rp.discharge_dt) discharge_dt
-	,iif(rp.discharge_dt = '9999-12-31', null, rp.discharge_dt) discharge_dt_null
-	,iif(rp.discharge_dt = '9999-12-31', 0, 1) fl_discharge
-	,datediff(dd, rp.removal_dt, 
-   iif(rp.discharge_dt = '9999-12-31', '2018-04-27', rp.discharge_dt)) + 1 los
-  ,rp.id_case
-  ,rp.tx_county 
+,rp.removal_dt
+,iif(rp.discharge_from_pilot = '9999-12-31', '2018-04-27', rp.discharge_from_pilot) discharge_dt
+,iif(rp.discharge_from_pilot = '9999-12-31', null, rp.discharge_from_pilot) discharge_dt_null
+,iif(rp.discharge_from_pilot = '9999-12-31', 0, 1) fl_discharge
+,datediff(dd, rp.removal_dt, 
+iif(rp.discharge_dt = '9999-12-31', '2018-04-27', rp.discharge_from_pilot)) + 1 los
+,rp.id_case
+,rp.tx_county 
 from ##court_episodes rp
 where rp.removal_dt between '2010-01-01' and '2018-04-27'
 
@@ -93,8 +98,10 @@ where cd.calendar_date between '2000-01-01' and '2018-04-27'
 select 
 	rp.removal_dt
 	,id_removal_episode_fact
-	,iif(rp.discharge_dt = '9999-12-31', '2018-04-27', rp.discharge_dt) discharge_dt
-	,iif(rp.discharge_dt = '9999-12-31', null, rp.discharge_dt) discharge_dt_null
+	,iif(rp.discharge_from_pilot = '9999-12-31'
+    , '2018-04-27', rp.discharge_from_pilot) discharge_dt
+	,iif(rp.discharge_from_pilot = '9999-12-31'
+    , null, rp.discharge_from_pilot) discharge_dt_null
   ,rp.tx_county 
 from ##court_episodes rp
   where rp.tx_county in ('Grant', 'Lewis')
@@ -193,11 +200,7 @@ deseasonal_exits_grant_fit <- auto.arima(deseasonal_exits_grant, seasonal=FALSE)
 
 tsdisplay(residuals(deseasonal_exits_grant_fit), lag.max=45, main='(1,1,1) Model Residuals')
 
-deseasonal_exits_grant_fit2 <- arima(deseasonal_exits_grant, order=c(1,1,21))
-
-tsdisplay(residuals(deseasonal_exits_grant_fit2), lag.max=45, main='(1,1,21) Model Residuals')
-
-deseasonal_exits_grant_fcast <- forecast(deseasonal_exits_grant_fit2, h=63)
+deseasonal_exits_grant_fcast <- forecast(deseasonal_exits_grant_fit, h=63)
 
 # Lewis Entries Forecast
 
@@ -235,11 +238,7 @@ deseasonal_exits_lewis_fit <- auto.arima(deseasonal_exits_lewis, seasonal=FALSE)
 
 tsdisplay(residuals(deseasonal_exits_lewis_fit), lag.max=45, main='(1,1,1) Model Residuals')
 
-deseasonal_exits_lewis_fit2 <- arima(deseasonal_exits_lewis, order=c(1,1,36))
-
-tsdisplay(residuals(deseasonal_exits_lewis_fit2), lag.max=45, main='(1,1,36) Model Residuals')
-
-deseasonal_exits_lewis_fcast <- forecast(deseasonal_exits_lewis_fit2, h=63)
+deseasonal_exits_lewis_fcast <- forecast(deseasonal_exits_lewis_fit, h=63)
 
 
 write_feather(as_data_frame(deseasonal_exits_lewis_fcast)
