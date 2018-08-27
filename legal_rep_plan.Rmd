@@ -2,6 +2,7 @@
 title: "Assessment of the Dependent Child Legal Representation Pilot"
 author: "Joe Mienko"
 header-includes:
+   - \usepackage{svg}
    - \usepackage{pgf}
    - \usepackage{tikz}
    - \usetikzlibrary{automata, shapes, shadows, arrows, calc, shapes.geometric}
@@ -10,7 +11,10 @@ header-includes:
    - \usepackage{makecell} 
    - \usepackage{float} 
    - \usepackage{newlfont}
-output: pdf_document
+output: 
+  pdf_document:
+    latex_engine: pdflatex
+    pandoc_args: "--pdf-engine-opt=--shell-escape"
 bibliography: legal_rep_plan.bib
 ---
 
@@ -205,72 +209,6 @@ square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=
 \end{tikzpicture}
 ```
 
-\newpage
-## Data Integration
-
-Figure 4 provides a graphical outline of our data integration plan. As can be seen, data will be integrated from multiple sources. Our current plans are to have data linkages conducted in two steps. The first step will involve the WSCCR receiving data from the identified sources in the Figure. Using a probabilistic matching algorithm, WSCCR will integrate the data sources and provide a linking file, along with identifying information. This linking file will then be integrated using a deterministic algorithm developed by OSPI to CEDARS data. Separate from the exchange of data with OSPI, WSCCR will send a separate series of files to the research team. The data sent to the research team will have identifying information removed. Similarly, once OSPI has completed their integration, a separate de-identified file will be transmitted to the research team. All files submitted to the research team will contain a FamLink person ID. The FamLink person ID will be used to link data received from OSPI and WSCCR. This ID will also be used by the research team to integrate with the limited set of FamLink data warehouse (FLDW) records held by the research team under a separate data sharing agreement. 
-
-```{r fig4, engine = "tikz",  engine.opts = list(template = "legal_rep_plan_head.tex"), results=TRUE, echo=FALSE, fig.cap = "Data Linkage Plan", cache=TRUE}
-
-\makeatother
-\begin{tikzpicture}[
-    font=\sffamily,
-  every matrix/.style={ampersand replacement=\&,column sep=2cm,row sep=2cm},
-  source/.style={draw=none,thick,rounded corners,fill=red,inner sep=.3cm,text=white},
-  process/.style={draw=none,thick,circle,fill=blue, minimum size=2cm, text=white},
-  sink/.style={source,fill=black!60!green,draw=none,text=white},
-  datastore/.style={draw=gray,very thick,shape=datastore,inner sep=.3cm, text=gray},
-  dots/.style={gray,scale=2},
-  to/.style={->,>=stealth',shorten >=1pt,semithick,font=\sffamily\footnotesize,line width=.5mm,gray},
-  every node/.style={align=center}]
-
-  % Position the nodes using a matrix layout
-  \matrix{
-    \node[source] (scomis) {SCOMIS};
-        \& \node[source] (ocla) {OCLA\\Attorney Surveys};
-        \& \node[source] (cita_data) {OCLA\\Training DB};
-        \& \node[source] (famlink) {FamLink}; 
-        \& \node[source, fill=uw_purple, draw=uw_gold, line width=.5mm] (redcap) {Youth Survey\\@UW}; \& \\
-        \& 
-        \& \node[process] (wsccr_link) {WSCCR \\ $\bowtie$};  \& \\
-        \&
-        \& \node[datastore] (buffer1) {secure \\ store 1}; 
-        \& \node[datastore] (buffer2) {secure \\ store 2}; 
-        \& \node[sink] (datastore) {PROJECT-DB}; \& \\
-        \& \node[source] (cedars) {CEDARS};
-        \& \node[process] (ospi_link) {OSPI \\ $\bowtie$}; \&
-        \& \node[source, fill=uw_purple, draw=uw_gold, line width=.5mm] (uw_core_data) {Limited FLDW\\@UW}; \\ 
-  };
-
-  % Draw the arrows between the nodes and label them.
-  \draw[to] (scomis) -- node[midway,above] {}
-      node[midway,below] {} (wsccr_link);
-  \draw[to] (ocla) -- node[midway,above] {}
-      node[midway,below] {} (wsccr_link);
-  \draw[to] (famlink) -- node[midway,above] {}
-      node[midway,below] {} (wsccr_link);
-  \draw[to] (cita_data) -- node[midway,above] {}
-      node[midway,below] {} (wsccr_link);
-  \draw[to] (redcap) -- node[midway,above] {}
-      node[midway,below] {} (wsccr_link);
-  \draw[to] (wsccr_link) -- 
-      node[midway,right] {PK \& \\Identifying Fields \\ via SSH} (buffer1);
-  \draw[to] (wsccr_link) to[bend left=45] 
-      node[anchor=center, above right, midway] {PK \& \\Non-Identifying \\ Fields via SSH} (buffer2);
-  \draw[to] (buffer1) --
-      node[midway,right] {SSH\\File Access} (ospi_link);
-  \draw[to] (cedars) -- node[midway,above] {}
-      node[midway,below] {} (ospi_link);
-  \draw[to] (ospi_link) to[bend right=45] node[gray,anchor=center, below right, midway] {PK \& \\Non-Identifying \\ Fields via SSH}
-      node[midway,below] {} (buffer2);
-  \draw[to] (buffer2) --
-      node[midway,above] {SSH\\File Access} (datastore);
-  \draw[to] (uw_core_data) -- 
-      node[midway,right] {SSH\\File Access} (datastore);
-
-\end{tikzpicture}
-```
-
 ## Primary Objectives
 
 ## Use of Comparison Groups
@@ -281,5 +219,95 @@ Figure 4 provides a graphical outline of our data integration plan. As can be se
 
 ## Statistical Analyses
 
+# Data Collection Procedures
+
+\newpage
+## Data Integration
+
+### Agencies Holding Data
+
+The following agencies hold data that will be utilized in this project: 
+
+\begin{description}
+ \item[AOC] The Administrative Office of the Courts (AOC) will be directly contributing data to Linkage Processes A and B. AOC will also provide a weekly report of dismissals from the dependency system.
+ \item[OSPI] The Office of the Superintendent of Public Instruction (OSPI) will be contributing data to Linkage Process C.
+ \item[OCLA] The Office of Civil Legal Aid will be directly contributing data to Linkage Process A and B.
+ \item[DCYF] The Department of Children Youth and Families will be directly contributing data to Linkage Processes A, B, and D. 
+  \item[SSW] The School of Social Work at the University of Washington (SSW) (i.e. the "research team") will be directly contributing data to Linkage Process B. 
+\end{description}
+
+### Method for Obtaining Records
+
+Subsequent to the approval of this application, data sharing agreements (DSAs) will need to be established between the research team, and each of the aforementioned agencies. All data transmissions made in support of this project shall meet or exceed the data security requirements of the aforementioned agencies. When data transmission policies between agencies conflict, the more secure transmission method will be utilized. No transmission of data will be made outside of secure shell protocol (SSH) version 2.0. 
+
+At a minimum, two DSAs will be required: 
+
+\begin{description}
+ \item[DSA for Linkage Processes A \& C] An agreement between AOC, OCLA, DCYF, OSPI, and SSW. This DSA will facilitate the integration of data from Linkage Process A into the OSPI Schema described in the Appendix Gs via Linkage Process C. This DSA will also describe the process for securely transmitting data between all of the aforementioned entities, and the timeline for these transmissions. 
+
+ \item[DSA for Linkage Processes A, B, \& D] An agreement between AOC, OCLA, DCYF, and SSW. This DSA will facilitate the integration of data from Linkage Process A and B into the Project DB by way of Linkage Process D. This DSA will also describe the process for securely transmitting data between all of the aforementioned entities, and the timeline for these transmissions. 
+\end{description}
+
+### Plans to Link Records
+
+As can be seen in Figure 4, multiple linkage processes are planned to facilitate the various components of this project. The multiple processes are planned for the purpose of 1. accommodating different timelines for different components of the project, and 2. accommodating the Family Educational Rights and Privacy Act (FERPA) requirements of OSPI separately from other linkage efforts. Each of the four linkage efforts (A-D) are outlined below. 
+
+Each of these processes are progressive toward the creation of the Project Database (Project DB) - a secure MS-SQL database managed by SSW. The Project DB will contain three schemas - `cw`, `survey`, and `ospi`. 
+
+#### Linkage Processes A
+
+The CW Schema generated from Linkage Process A shall serve as foundation data for all aspects of this project. As can be seen in Figure 4, Linkage Process A will integrate data from OCLA's training databases, the Superior Court Management Information System (SCOMIS, managed by AOC), and Washington's Statewide Automated Child Welfare Information System (FamLink, managed by DCYF). Linkages between FamLink and SCOMIS will be made via established probabilistic methods. AOC conducts a similar linkage on a quarterly basis under a separate agreement with DCYF. In order to minimize the workload of DCYF, however, the linkage for this project will only involve integrating a small set of identified data to be used for this linkage process (and Linkage Processes B & C). Specifically, the following fields will be shared from the so-called `PEOPLE_DIM` table from the FamLink data warehouse: 
+
+* first name, last name, middle name, middle initial, prefix, and suffix fields for all persons identified in FamLink (i.e. `NM_FIRST`, `NM_LAST`, `NM_MIDDLE`, `NM_MIDDLE_INTL`, `NM_PRFX`, `NM_SFX`)
+* non-identifying demographic fields which will be used to help refine the matches to SCOMIS data (i.e. `CD_CTZN`, `TX_CTZN`, `CD_GNDR`, `TX_GNDR`, `CD_HSPNC`, `TX_HSPNC`, `CD_INDN`, `TX_INDN`, `CD_INDN2`, `TX_INDN2`, `CD_RACE`, `TX_RACE`, `CD_RACE_FIVE`, `TX_RACE_FIVE`, `CD_RACE_FOUR`, `TX_RACE_FOUR`, `CD_RACE_THREE`, `TX_RACE_THREE`, `CD_RACE_TWO`, `TX_RACE_TWO`, `CD_RLGN`, `TX_RLGN`, `CD_STATE_RSDNT`, `TX_STATE_RSDNT`, `DT_BIRTH`, and `DT_DEATH`)
+* `ID_PRSN`, a unique identifier for all persons within FamLink. `ID_PRSN` will be used as the primary person key within the `survey` and `cw` schemas in the Project DB. 
+ 
+In addition to the SCOMIS-FamLink linkage, AOC will also integrate attorney training records held by OCLA. These records, however, will be integrated deterministically using attorney bar numbers which are reliably available in both data sources. 
+
+Once linkages are completed, AOC will transmit the identified data (i.e. CW Schema (ID) in Figure 4) to OSPI. Separately from the transmission to OSPI, AOC will transmit de-identified data to SSW (i.e. CW Schema (no-ID) in Figure 4).
+
+These linkages and transmissions are planned to take place three times throughout this project: 
+
+* On or before 1/11/2019, containing data on dependency cases with petition dates from 1/1/2005 through 12/31/2018. 
+* On or before 4/12/2019, containing data on dependency cases with petition dates from 1/1/2005 through 3/31/2019. 
+* On or before 12/13/2019, containing data on dependency cases with petition dates from 1/1/2005 through 11/30/2019. 
+
+#### Linkage Processes B
+
+The survey schema generated from Linkage Process B shall serve as a contextual data set for those dependent children residing under the jurisdictions of Lewis, Grant, Douglas, and Whatcom Superior Courts. As can be seen in Figure 4, Linkage Process B will integrate data from the OCLA Attorney Survey (collected by OCLA as a part of routine quality assurance activities) and the Youth Survey administered by SSW. The Youth Survey database will be seeded with weekly reports of dependency exits containing last known contact information for the child and the attorney of the child (if applicable). Weekly reports will be transmitted from AOC to SSW starting on 12/6/2018 and continuing through 4/25/2018. 
+
+This contact information will be utilized by the SSW research team to contact the child, gain the consent of their permanent caretaker, and gain the ascent of the child. Depending on the age and stated technological sophistication of the child, the Youth Survey database will be populated either directly by the child (through an online interface), or through the assistance of a member of the research team.
+
+Periodically, the OCLA-held attorney survey, and the newly collected youth survey will be integrated with the same FamLink identifying information referenced in Linkage Process A. After the integration has been completed, AOC will transmit de-identified data to SSW (i.e. Survey Schema (no-ID) in Figure 4).
+
+These linkages and transmissions are planned to take place twice throughout this project: 
+
+* On or before 2/1/2019, containing the FamLink `id_prsn` field for all available survey respondents. 
+* On or before 5/17/2019, containing the FamLink `id_prsn` field for all available survey respondents. 
+
+#### Linkage Processes C
+
+The OSPI Schema generated from Linkage Process C exists to help us understand educational outcomes identified by the aforementioned stakeholder engagement process. Linkage Process C will specifically integrate testing data from the TIDE data system along with enrollment and disciplinary data from CEDARS. Both of these data systems are managed by OSPI. Using an established deterministic linking method, OSPI will take the identified Child Welfare schema generated and transmitted by AOC through Linkage Process A and combine the Child Welfare Schema with records from TIDE and CEDARS. In this way, the OSPI schema will contain some of the same data contained within the Child Welfare Schema. The distinction between these two schemas is that the OSPI schema will not contain the FamLink `id_prsn` field. Instead, persons in the OSPI schema will be identified using an OSPI-generated research ID. Once the linkage has been completed, OSPI will securely transmit a de-identified version of the OSPI schema for storage within the Project DB.
+
+These linkages and transmissions are planned to take place three times throughout this project: 
+
+* On or before 1/18/2019, containing data on dependency cases with petition dates from 1/1/2005 through 12/31/2018, and educational records (where available) starting in 2000. 
+* On or before 4/19/2019, containing data on dependency cases with petition dates from 1/1/2005 through 3/31/2019, and educational records (where available) starting in 2000. 
+* On or before 12/20/2019, containing data on dependency cases with petition dates from 1/1/2005 through 11/30/2019, and educational records (where available) starting in 2000. 
+
+#### Linkage Processes D
+
+Upon the receipt of the aforementioned de-identified extracts, each extract will be integrated into the appropriate database schema. The OSPI Schema will be used "as-is". The Survey and CW schemas, however, will be combined with selected fields from the de-identified FamLink Core Data set - an extract of data shared with the SSW on a quarterly basis for a variety of research projects under a long-standing DSA the SSW and DCYF. The FamLink Core Data also utilize the `ID_PRSN` field as a person key. As such, SSW can integrate the relevant fields of data into the Project DB without the need for further assistance from DCYF. Linkage Process D will be conducted upon receipt of a given schema of Child Welfare or Survey data, according to the schedules outlined in the previous sections. 
+
+### Identifiers to be Used to Link Records
+
+As outlined above, within the Project DB, records will be identified using either the `ID_PRSN` field or the OSPI-generated research ID. Prior to reaching the Project DB, records will be integrated using a combination of deterministic and probabilistic techniques involving the fields of data outlined in the Linkage Process A section above. 
+
+
+```{r fig4, fig.cap = "Data Integration Plan", results=TRUE, echo=FALSE, out.extra='', cache=TRUE}
+
+knitr::include_graphics('./data_linkage_diagram.png')
+
+```
 \newpage
 # References

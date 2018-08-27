@@ -5,8 +5,9 @@ account: pocdata
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 399455
-bundleId: 1544684
+bundleId: 1547740
 url: https://pocdata.shinyapps.io/legal_rep_planning/
-when: 1534781482.79058
+when: 1534901053.38458
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: get_data.r|legal_rep_plan_head.tex|legal_rep_plan.bib|legal_rep_plan.pdf|legal_rep_plan.Rmd|spend_down_analysis.bib|spend_down_analysis.html|spend_down_analysis.pdf|spend_down_analysis.Rmd|legal_rep_plan_files/figure-latex/fig1-1.pdf|legal_rep_plan_files/figure-latex/fig2-1.pdf|legal_rep_plan_files/figure-latex/fig3-1.pdf|legal_rep_plan_files/figure-latex/fig4-1.pdf|spend_down_analysis_files
