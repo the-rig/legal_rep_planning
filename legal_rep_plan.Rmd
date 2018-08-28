@@ -215,6 +215,175 @@ square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=
 
 ## Sampling Plan
 
+As it has been largley designed within the aforementioned proviso, the sampling plan in this study is ostensibly simple - compare the outcomes of dependent children in Grant and Lewis with the dependent children in Whatcom and Douglas. However, this sampling plan is complicated by at least two factors: 1. the amount of resources devoted to this project, and 2. the number of dependent children we can reasonably expect to observe in the pilot counties. 
+
+### Exected Study Duration
+
+Although the pilot has adequete funding to sustain legal representation (in terms of attorney salaries) within Grant and Lewis counties, it is unlikely that the pilot has enough funds to maintain representation for these children through the end of their dependencies. This issue is described some in the following app which simulates dependency caseloads within Lewis and Grant: [Pilot Simulation Tool](https://pocdata.shinyapps.io/legal_rep_planning/). As stated within the app, and in the aforementioned legislation, the total budget of the pilot is currently \$1,296,000; \$648,000 for each half of the current biennium. By the end of the current month, we estimate that as much as much as \$330,000 will have been expended. 
+
+With the following assumptions: 
+
+1. OCLA attorneys will not exceed 60 cases per attorney, 
+2. Annual attorney salaries will remain at \$120,000 per 60 cases,  
+3. Attorneys will remain assigned to dependent children until their dependencies close, or they become legally free,  
+4. That children enter to and exit from dependency at roughly the same rate that they have since 2010, and 
+5. That OCLA will continue to assign attorneys to new children until projected funds are expended, 
+
+```{r}
+library(metafor)
+source("global.r")
+set.seed(12345)
+# From AOC (Orme)
+pr_over_8_douglas <- (1+3+1)/19
+pr_over_8_whatcom <- (2+2+2+1+7+13+5+5+9)/126
+pr_over_8_lewis <- (5+1+1+5+1+1+1+3+4+1+3+1+3+5)/92
+pr_over_8_grant <- (1+5+1+2+3+3+6+1+1+6+7+8+4+13+1+1+1)/167
+
+# from QIC study (longest duration model)
+QIC_effect <- 1.16 #1.40 
+QIC_p <- 0.2994 #0.0318 
+QIC_z <- abs(qnorm(QIC_p/2))
+QIC_se <- log(QIC_effect)/QIC_z
+
+PB_effect <- 1.59
+PB_p <- runif(1, 0.0009, 0.009)
+PB_z <- abs(qnorm(PB_p/2)) # divide to get one-sided
+PB_se <- log(PB_effect)/PB_z
+
+yi  <- log(c(QIC_effect, PB_effect)) ### the log odds ratios
+sei <- c(QIC_se, PB_se) ### the corresponding standard errors
+res <- rma(yi=yi, sei=sei) ### fit a random-effects model to these data
+
+sample_size_calcs <- function(stop_date_sim, meta_effect){
+  
+  stop_date_parse <- gsub("-", "", ymd(stop_date_sim) + months(10))
+  
+  entries_whatcom <- build_point_estimates_whatcom(stop_date = stop_date_sim) %>%
+    mutate(total_entries = cumsum(entries)) %>% 
+    .$total_entries %>%
+    max()
+  
+  entries_grant <- build_point_estimates_grant(stop_date = stop_date_sim) %>%
+    mutate(total_entries = cumsum(entries)) %>% 
+    .$total_entries %>%
+    max()
+  
+  entries_douglas <- build_point_estimates_douglas(stop_date = stop_date_sim) %>%
+    mutate(total_entries = cumsum(expected_study_exits)) %>% 
+    .$total_entries %>%
+    max()
+  
+  entries_lewis <- build_point_estimates_lewis(stop_date = stop_date_sim) %>%
+    mutate(total_entries = cumsum(entries)) %>% 
+    .$total_entries %>%
+    max()
+  
+  exits_whatcom <- build_point_estimates_whatcom(stop_date = stop_date_sim) %>%
+    filter(month_name <= ymd(stop_date_sim) + months(10)) %>%
+    mutate(total_exits = cumsum(expected_study_exits)) %>% 
+    .$total_exits %>%
+    max()
+
+  exits_grant <- build_point_estimates_grant(stop_date = stop_date_sim) %>%
+    filter(month_name <= ymd(stop_date_sim) + months(10)) %>%
+    mutate(total_exits = cumsum(expected_study_exits)) %>% 
+    .$total_exits %>%
+    max()
+  
+  exits_douglas <- build_point_estimates_douglas(stop_date = stop_date_sim) %>%
+    filter(month_name <= ymd(stop_date_sim) + months(10)) %>%
+    mutate(total_exits = cumsum(expected_study_exits)) %>% 
+    .$total_exits %>%
+    max()
+  
+  exits_lewis <- build_point_estimates_lewis(stop_date = stop_date_sim) %>%
+    filter(month_name <= ymd(stop_date_sim) + months(10)) %>%
+    mutate(total_exits = cumsum(expected_study_exits)) %>% 
+    .$total_exits %>%
+    max()
+  
+  total_exits <- (exits_douglas + exits_whatcom + exits_grant + exits_lewis)
+  
+  survey_responses_douglas <- build_point_estimates_douglas(stop_date = stop_date_parse) %>%
+    filter(month_name >= ymd(20181201) & month_name <= ymd(stop_date_sim) + months(10)) %>%
+    .$expected_study_exits %>%
+    sum()*pr_over_8_douglas
+  
+  survey_responses_whatcom <- build_point_estimates_whatcom(stop_date = stop_date_parse) %>%
+    filter(month_name >= ymd(20181201) & month_name <= ymd(stop_date_sim) + months(10)) %>%
+    .$expected_study_exits %>%
+    sum()*pr_over_8_whatcom
+  
+  survey_responses_grant <- build_point_estimates_grant(stop_date = stop_date_parse) %>%
+    filter(month_name >= ymd(20181201) & month_name <= ymd(stop_date_sim) + months(10)) %>%
+    .$expected_study_exits %>%
+    sum()*pr_over_8_grant
+  
+  survey_responses_lewis <- build_point_estimates_lewis(stop_date = stop_date_parse) %>%
+    filter(month_name >= ymd(20181201) & month_name <= ymd(stop_date_sim) + months(10)) %>%
+    .$expected_study_exits %>%
+    sum()*pr_over_8_lewis
+  
+  total_survey = (survey_responses_grant + survey_responses_whatcom + survey_responses_lewis + survey_responses_douglas)
+  
+  
+  total_entries <- (entries_douglas + entries_whatcom + entries_grant + entries_lewis)
+  exposed_entries <- (entries_grant + entries_lewis)
+  
+  q_exp <- exposed_entries/total_entries
+  
+  alpha <- .05
+  alpha_z <- qnorm((1-(alpha/2)))
+  
+  beta <- .2
+  beta_z <- qnorm((1-(beta)))
+  
+  A <- (alpha_z + beta_z)^2
+  B <- ((meta_effect^2)*q_exp*(1-q_exp))
+  
+  events_needed <- as.numeric(A/B)
+  
+  list(
+    survey_responses_lewis = survey_responses_lewis
+    ,survey_responses_grant = survey_responses_grant
+    ,survey_responses_douglas = survey_responses_douglas
+    ,survey_responses_whatcom = survey_responses_whatcom
+    ,exits_douglas = exits_douglas
+    ,exits_grant = exits_grant
+    ,exits_lewis = exits_lewis
+    ,exits_whatcom = exits_whatcom
+    ,total_survey = total_survey
+    ,total_exits = total_exits
+    ,total_entries = total_entries
+    ,events_needed = events_needed
+  )
+  
+}
+
+
+ss_no <- sample_size_calcs(stop_date_sim = 20190101, meta_effect = res$b)
+
+ss_1yr <- sample_size_calcs(stop_date_sim = 20200101, meta_effect = res$b)
+
+ss_2yr <- sample_size_calcs(stop_date_sim = 20200601, meta_effect = res$b)
+
+```
+
+We estimate that OCLA will need to stop taking new cases in January of 2019. While the research team is hopeful that additional funds will be appropriated to continue gathering data into the next bienium, we cannot be certain that such an appropriation will take place. As such, our sampling plan is written from a "worst case" data collection scenario; assuming that no new funds will be appropriated. 
+
+Although we have plans to estimate treatment effects across a wide array of outcomes, we have focused power calculations on permanency outcomes. This focus was chosen because permanency outcomes have been the focus of the limited number of studies which have been conducted in this domain. In terms of potential cost differentials resulting from attorney assignment, permanency outcomes are also one of the most direct mechanisms through which other outcomes (e.g. costs) will be impacted as the result of the pilot. In other words, if we don't have sufficient power to observe permanency effects, it is unlikely that we will be able to draw inference related to other more distal outcomes. 
+
+Using effect sizes from @Orlebeke2016 and @Zinn2015, we first estimated "meta-effects" as outlined by @Follmann1999, and as implemented by @Viechtbauer2010 in the `metafor` package. The results of this analysis gives us reason to expect that dependent children with trained legal representatives will acheive permanency more quickly than children with untrained legal representatives [@Orlebeke2016] or no legal representation at all [@Zinn2016]. The average "hazard ratio" across both of these studies (HR = `r round(exp(res$b), 2)`) suggests that there is a `r scales::percent(exp(res$b)/(1+exp(res$b)))` chance that represented children will acheive permanency before unrepresented children. 
+
+Using standard parameters for the probability of Type I and Type II errors (.05 and .20 respectively), @Schoenfeld1983 provides formulas for the calculation of required sample sizes in the context of event history modeling. Specifically, given the aforementioned effect size, we would require `r round(ss_no$events_needed, 0)` observed permanency events in order to have confidence in our analysis from the standpoint of statistical power. 
+
+
+
+most likely outcome to 
+
+Under this assumption (no new cases beyond January of 2019), we estimate that `r round(ss_no$total_entries, 0)`
+
+
 ## Major Variables of Interest
 
 ## Statistical Analyses
@@ -274,7 +443,7 @@ These linkages and transmissions are planned to take place three times throughou
 
 #### Linkage Processes B
 
-The survey schema generated from Linkage Process B shall serve as a contextual data set for those dependent children residing under the jurisdictions of Lewis, Grant, Douglas, and Whatcom Superior Courts. As can be seen in Figure 4, Linkage Process B will integrate data from the OCLA Attorney Survey (collected by OCLA as a part of routine quality assurance activities) and the Youth Survey administered by SSW. The Youth Survey database will be seeded with weekly reports of dependency exits containing last known contact information for the child and the attorney of the child (if applicable). Weekly reports will be transmitted from AOC to SSW starting on 12/6/2018 and continuing through 4/25/2018. 
+The survey schema generated from Linkage Process B shall serve as a contextual data set for those dependent children residing under the jurisdictions of Lewis, Grant, Douglas, and Whatcom Superior Courts. As can be seen in Figure 4, Linkage Process B will integrate data from the OCLA Attorney Survey (collected by OCLA as a part of routine quality assurance activities) and the Youth Survey administered by SSW. The Youth Survey database will be seeded with weekly reports of dependency exits containing last known contact information for the child and the attorney of the child (if applicable). Weekly reports will be transmitted from AOC to SSW starting on 12/7/2018 (or earlier if approval is secured from the WSIRB in advance of expectations) and continuing through 11/30/2019. 
 
 This contact information will be utilized by the SSW research team to contact the child, gain the consent of their permanent caretaker, and gain the ascent of the child. Depending on the age and stated technological sophistication of the child, the Youth Survey database will be populated either directly by the child (through an online interface), or through the assistance of a member of the research team.
 
