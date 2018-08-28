@@ -194,7 +194,7 @@ dat_stock_and_flow <- DBI::dbGetQuery(conn = con
   ,cd.month
   ,cd.tx_county_mod
   from calendar_dates cd
-  join daily_counts dc 
+  left join daily_counts dc 
   on cd.calendar_date = dc.calendar_date 
   and cd.tx_county_mod = dc.tx_county_mod
   where cd.month < '2018-04-01'
@@ -210,6 +210,8 @@ write_feather(dat_stock_and_flow
 # Grant Entries Forecast
 
 ts_entries_grant <- filter(dat_stock_and_flow, tx_county_mod == "Grant") %>%
+  mutate(total_inflow_of_placements = ifelse(is.na(total_inflow_of_placements)
+                                             ,0, total_inflow_of_placements)) %>%
   .$total_inflow_of_placements %>%
   ts(frequency = 12, start = c(2000, 1)) %>%
   window(end=c(2018,3))
@@ -223,15 +225,17 @@ deseasonal_entries_grant_fit <- auto.arima(deseasonal_entries_grant, seasonal=FA
 
 tsdisplay(residuals(deseasonal_entries_grant_fit), lag.max=45, main='(1,1,1) Model Residuals')
 
-#fdeseasonal_entries_grant_fit2 <- arima(deseasonal_entries_grant, order=c(1,1,43))
+fdeseasonal_entries_grant_fit2 <- arima(deseasonal_entries_grant, order=c(1,1,30))
 
-#tsdisplay(residuals(deseasonal_entries_grant_fit2), lag.max=45, main='(1,1,43) Model Residuals')
+tsdisplay(residuals(fdeseasonal_entries_grant_fit2), lag.max=45, main='(1,1,30) Model Residuals')
 
-deseasonal_entries_grant_fcast <- forecast(deseasonal_entries_grant_fit, h=63)
+deseasonal_entries_grant_fcast <- forecast(fdeseasonal_entries_grant_fit2, h=63)
 
 # Grant Exits Forecast
 
 ts_exits_grant <- filter(dat_stock_and_flow, tx_county_mod == "Grant") %>%
+  mutate(total_outflow_of_placements = ifelse(is.na(total_outflow_of_placements)
+                                             ,0, total_outflow_of_placements)) %>%  
   .$total_outflow_of_placements %>%
   ts(frequency = 12, start = c(2000, 1)) %>%
   window(end=c(2018,3))
@@ -244,11 +248,17 @@ deseasonal_exits_grant_fit <- auto.arima(deseasonal_exits_grant, seasonal=FALSE)
 
 tsdisplay(residuals(deseasonal_exits_grant_fit), lag.max=45, main='(1,1,1) Model Residuals')
 
-deseasonal_exits_grant_fcast <- forecast(deseasonal_exits_grant_fit, h=63)
+fdeseasonal_exits_grant_fit2 <- arima(deseasonal_entries_grant, order=c(1,1,13))
+
+tsdisplay(residuals(fdeseasonal_exits_grant_fit2), lag.max=45, main='(1,1,13) Model Residuals')
+
+deseasonal_exits_grant_fcast <- forecast(fdeseasonal_exits_grant_fit2, h=63)
 
 # Lewis Entries Forecast
 
 ts_entries_lewis <- filter(dat_stock_and_flow, tx_county_mod == "Lewis") %>%
+  mutate(total_inflow_of_placements = ifelse(is.na(total_inflow_of_placements)
+                                             ,0, total_inflow_of_placements)) %>%
   .$total_inflow_of_placements %>%
   ts(frequency = 12, start = c(2000, 1)) %>%
   window(end=c(2018,3))
@@ -261,15 +271,17 @@ deseasonal_entries_lewis_fit <- auto.arima(deseasonal_entries_lewis, seasonal=FA
 
 tsdisplay(residuals(deseasonal_entries_lewis_fit), lag.max=45, main='(1,1,1) Model Residuals')
 
-#deseasonal_entries_lewis_fit2 <- arima(deseasonal_entries_lewis, order=c(1,1,19))
+deseasonal_entries_lewis_fit2 <- arima(deseasonal_entries_lewis, order=c(1,1,38))
 
-#tsdisplay(residuals(deseasonal_entries_lewis_fit2), lag.max=45, main='(1,1,19) Model Residuals')
+tsdisplay(residuals(deseasonal_entries_lewis_fit2), lag.max=45, main='(1,1,38) Model Residuals')
 
-deseasonal_entries_lewis_fcast <- forecast(deseasonal_entries_lewis_fit, h=63)
+deseasonal_entries_lewis_fcast <- forecast(deseasonal_entries_lewis_fit2, h=63)
 
 # Lewis Exits Forecast
 
 ts_exits_lewis <- filter(dat_stock_and_flow, tx_county_mod == "Lewis") %>%
+  mutate(total_outflow_of_placements = ifelse(is.na(total_outflow_of_placements)
+                                              ,0, total_outflow_of_placements)) %>%  
   .$total_outflow_of_placements %>%
   ts(frequency = 12, start = c(2000, 1)) %>%
   window(end=c(2018,3))
@@ -282,12 +294,18 @@ deseasonal_exits_lewis_fit <- auto.arima(deseasonal_exits_lewis, seasonal=FALSE)
 
 tsdisplay(residuals(deseasonal_exits_lewis_fit), lag.max=45, main='(1,1,1) Model Residuals')
 
-deseasonal_exits_lewis_fcast <- forecast(deseasonal_exits_lewis_fit, h=63)
+deseasonal_exits_lewis_fit2 <- arima(deseasonal_entries_lewis, order=c(1,1,39))
+
+tsdisplay(residuals(deseasonal_exits_lewis_fit2), lag.max=45, main='(1,1,39) Model Residuals')
+
+deseasonal_exits_lewis_fcast <- forecast(deseasonal_exits_lewis_fit2, h=63)
 
 
 # Whatcom Entries Forecast
 
 ts_entries_whatcom <- filter(dat_stock_and_flow, tx_county_mod == "Whatcom") %>%
+  mutate(total_inflow_of_placements = ifelse(is.na(total_inflow_of_placements)
+                                             ,0, total_inflow_of_placements)) %>%
   .$total_inflow_of_placements %>%
   ts(frequency = 12, start = c(2000, 1)) %>%
   window(end=c(2018,3))
@@ -301,15 +319,17 @@ deseasonal_entries_whatcom_fit <- auto.arima(deseasonal_entries_whatcom, seasona
 
 tsdisplay(residuals(deseasonal_entries_whatcom_fit), lag.max=45, main='(1,1,1) Model Residuals')
 
-#deseasonal_entries_whatcom_fit2 <- arima(deseasonal_entries_whatcom, order=c(1,1,27))
+deseasonal_entries_whatcom_fit2 <- arima(deseasonal_entries_whatcom, order=c(1,1,39))
 
-#tsdisplay(residuals(deseasonal_entries_whatcom_fit2), lag.max=45, main='(1,1,27) Model Residuals')
+tsdisplay(residuals(deseasonal_entries_whatcom_fit2), lag.max=45, main='(1,1,39) Model Residuals')
 
-deseasonal_entries_whatcom_fcast <- forecast(deseasonal_entries_whatcom_fit, h=63)
+deseasonal_entries_whatcom_fcast <- forecast(deseasonal_entries_whatcom_fit2, h=63)
 
 # Whatcom Exits Forecast
 
 ts_exits_whatcom <- filter(dat_stock_and_flow, tx_county_mod == "Whatcom") %>%
+  mutate(total_outflow_of_placements = ifelse(is.na(total_outflow_of_placements)
+                                              ,0, total_outflow_of_placements)) %>%  
   .$total_outflow_of_placements %>%
   ts(frequency = 12, start = c(2000, 1)) %>%
   window(end=c(2018,3))
@@ -320,13 +340,17 @@ deseasonal_exits_whatcom <- seasadj(decomp_exits_whatcom)
 
 deseasonal_exits_whatcom_fit <- auto.arima(deseasonal_exits_whatcom, seasonal=FALSE)
 
-tsdisplay(residuals(deseasonal_exits_whatcom_fit), lag.max=45, main='(1,1,1) Model Residuals')
+deseasonal_exits_whatcom_fit2 <- arima(deseasonal_entries_whatcom, order=c(1,1,28))
 
-deseasonal_exits_whatcom_fcast <- forecast(deseasonal_exits_whatcom_fit, h=63)
+tsdisplay(residuals(deseasonal_exits_whatcom_fit2), lag.max=45, main='(1,1,28) Model Residuals')
+
+deseasonal_exits_whatcom_fcast <- forecast(deseasonal_exits_whatcom_fit2, h=63)
 
 # Douglas Entries Forecast
 
 ts_entries_douglas <- filter(dat_stock_and_flow, tx_county_mod == "Douglas") %>%
+  mutate(total_inflow_of_placements = ifelse(is.na(total_inflow_of_placements)
+                                             ,0, total_inflow_of_placements)) %>%
   .$total_inflow_of_placements %>%
   ts(frequency = 12, start = c(2000, 1)) %>%
   window(end=c(2018,3))
@@ -340,15 +364,17 @@ deseasonal_entries_douglas_fit <- auto.arima(deseasonal_entries_douglas, seasona
 
 tsdisplay(residuals(deseasonal_entries_douglas_fit), lag.max=45, main='(1,1,1) Model Residuals')
 
-#deseasonal_entries_douglas_fit2 <- arima(deseasonal_entries_douglas, order=c(1,1,27))
+deseasonal_entries_douglas_fit2 <- arima(deseasonal_entries_douglas, order=c(1,1,15))
 
-#tsdisplay(residuals(deseasonal_entries_douglas_fit2), lag.max=45, main='(1,1,27) Model Residuals')
+tsdisplay(residuals(deseasonal_entries_douglas_fit2), lag.max=45, main='(1,1,15) Model Residuals')
 
-deseasonal_entries_douglas_fcast <- forecast(deseasonal_entries_douglas_fit, h=63)
+deseasonal_entries_douglas_fcast <- forecast(deseasonal_entries_douglas_fit2, h=63)
 
 # Douglas Exits Forecast
 
 ts_exits_douglas <- filter(dat_stock_and_flow, tx_county_mod == "Douglas") %>%
+  mutate(total_outflow_of_placements = ifelse(is.na(total_outflow_of_placements)
+                                              ,0, total_outflow_of_placements)) %>%  
   .$total_outflow_of_placements %>%
   ts(frequency = 12, start = c(2000, 1)) %>%
   window(end=c(2018,3))
