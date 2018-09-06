@@ -2,19 +2,21 @@
 title: "Assessment of the Dependent Child Legal Representation Pilot"
 author: "Joe Mienko"
 header-includes:
-   - \usepackage{svg}
-   - \usepackage{pgf}
-   - \usepackage{tikz}
-   - \usetikzlibrary{automata, shapes, shadows, arrows, calc, shapes.geometric}
-   - \usepackage[utf8]{inputenc}
-   - \usepackage{booktabs}
-   - \usepackage{makecell} 
-   - \usepackage{float} 
-   - \usepackage{newlfont}
-output: 
+- \usepackage{svg}
+- \usepackage{pgf}
+- \usepackage{tikz}
+- \usetikzlibrary{automata, shapes, shadows, arrows, calc, shapes.geometric}
+- \usepackage[utf8]{inputenc}
+- \usepackage{booktabs}
+- \usepackage{makecell}
+- \usepackage{float}
+- \usepackage{newlfont}
+- \usepackage{fancyhdr}
+output:
   pdf_document:
     latex_engine: pdflatex
-    pandoc_args: "--pdf-engine-opt=--shell-escape"
+    pandoc_args: --pdf-engine-opt=--shell-escape
+  word_document: default
 bibliography: legal_rep_plan.bib
 ---
 
@@ -63,7 +65,8 @@ The specific outcome measures identified for inclusion in this study are as foll
 * Grade Point Average
 * Truancy Rate
 * Status Offense Rate
-* 4th Grade Reading Proficiency Rate
+* Grade \& Subject-Specific Proficiency Rate (3-11)
+* Kindergarten Readiness Rate
 * 12 Month Permanency Rate
 * 24 Month Permanency Rate
 * Continuity Rate
@@ -84,7 +87,7 @@ The specific outcome measures identified for inclusion in this study are as foll
 
 ## Literature
 
-There is a paucity of peer-reviewed literature examining the legal representation of dependent children, and until recently, the field lacked consensus regarding legal practice standards for child representation in dependency proceedings. In 2009, in an effort to establish such standards, Children's Bureau (CB) established a National Quality Improvement Center on the Representation of Children in the Child Welfare System (QIC-ChildRep). Housed at the University of Michigan Law School, QIC-ChildRep formalized a best-practice model for stated-interest legal representation in dependency proceedings. This model was evaluated using randomized controlled trials in Washington and Georgia. Results of the Washington evaluation suggest that, relative to children who were represented by lawyers with no specialized training, children receiving representation under the best-practice model had a higher rate of early exits from foster care. Additionally, best-practice attorneys were found to have more contact with foster parents and other substitute caregivers. Cases in which best-practice attorneys were assigned were also more likely to have utilized non-adversarial case resolution options, including family team decision-making meetings (FTDMs) [@Orlebeke2016]. The American Bar Association (ABA) has since adopted this model as the recommended standard in juvenile dependency proceedings [@Lehrmann2010].  
+There is a paucity of peer-reviewed literature examining the legal representation of dependent children, and until recently, the field lacked consensus regarding legal practice standards for child representation in dependency proceedings. In 2009, in an effort to establish such standards, Children's Bureau (CB) established a National Quality Improvement Center on the Representation of Children in the Child Welfare System (QIC-ChildRep). Housed at the University of Michigan Law School, QIC-ChildRep formalized a best-practice model for stated-interest legal representation in dependency proceedings. This model was evaluated using randomized controlled trials in Washington and Georgia. Results of the Washington evaluation suggest that, relative to children who were represented by lawyers with no specialized training, children receiving representation under the best-practice model had a higher rate of early exits from foster care. Additionally, best-practice attorneys were found to have more contact with foster parents and other substitute caregivers. Cases in which best-practice attorneys were assigned were also more likely to have utilized non-adversarial case resolution options, including family team decision-making meetings (FTDMs) [@Orlebeke2016]. The American Bar Association (ABA) has since adopted this model as the recommended standard in juvenile dependency proceedings [@Lehrmann2010].
 
 While @Orlebeke2016 demonstrated some benefits from the use of the best-practice attorneys as compared to untrained attorneys, the QIC-ChildRep evaluation did not answer a more basic question: does the presence of stated-interest attorneys benefit children compared to the counterfactual condition of no attorney? While the literature is similarly silent on this question, @Zinn2015 recently published findings of the Foster Children's Project (FCP) of the Legal Aid Society of Palm Beach County, Florida; a project in which children placed in foster care from July 2001 to December of 2004 were provided stated-interest counsel for the duration of their dependency cases. While this study predates the establishment of the QIC-ChildRep model (i.e. there was no specific practice model utilized by attorneys in the FCP pilot), the findings of the study suggest that children with stated-interest legal representation achieve permanency more quickly than children without representation. 
 
@@ -123,14 +126,14 @@ square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=
 \end{tikzpicture}
 ```
 
-Figure 1 follows the tradition of structural equation modeling literature in which manifest variables (i.e. things we directly observe) are drawn as squares, and latent variables (i.e. things we observe indirectly) are drawn as circles. Of particular importance to the current discussion is the learning that takes place as the result of the standards-based training  (i.e. changes to an attorney's knowledge, skill, and attitude). As outlined by @Orlebeke2016, learning that takes place across these constructs is hypothesized to change attorney behaviors. Further down the "causal" chain, we see that these behaviors are also believed to impact court processes, which in turn impact child outcomes. 
+Figure 1 follows the tradition of structural equation modeling literature in which manifest variables (i.e. things we directly observe) are drawn as squares, and latent variables (i.e. things we observe indirectly) are drawn as circles. Of particular importance to the current discussion is the learning that takes place as the result of the SBLRF training  (i.e. changes to an attorney's knowledge, skill, and attitude). As outlined by @Orlebeke2016, learning that takes place across these constructs is hypothesized to change attorney behaviors. Further down the "causal" chain, we see that these behaviors are also believed to impact court processes, which in turn impact child outcomes. 
 
 \newpage
 # Study Design
 
 ## Conceptual Model
 
-As of the date of this writing, we do not have plans to perform any assessment of how attorney knowledge, skill, or attitude may have been impacted by the standards-based legal training utilized in Washington. As described above, much of the training has been previously evaluated via the QIC-ChildRep program. Our focus in the current project will be on the impact of standards-based legal representation on attorney behaviors, case processes, and child outcomes. While we recognize that knowledge, skill, and attitude (KSA) still play a role in our program model (and a role in the types of questions we can reasonably ask in this study), we will not be engaged in data collection efforts regarding these constructs. Figure 2 collapses these constructs into a single latent variable as shown below in the condensed logic model (i.e. directed acyclic graph (DAG)). Similarly, although we will be collecting information on attorney behaviors ($B$) in this study for the purpose of control measures, we will not examining these behaviors as a primary predictor of interest. 
+As of the date of this writing, we do not have plans to perform any assessment of how SBLRF attorney knowledge, skill, or attitude may have been impacted by the standards-based legal training utilized in Washington. As described above, much of the training has been previously evaluated via the QIC-ChildRep program. Our focus in the current project will be on the impact of standards-based legal representation on attorney behaviors, case processes, and child outcomes. While we recognize that knowledge, skill, and attitude (KSA) still play a role in our program model (and a role in the types of questions we can reasonably ask in this study), we will not be engaged in data collection efforts regarding these constructs. Figure 2 collapses these constructs into a single latent variable as shown below in the condensed logic model (i.e. directed acyclic graph (DAG)). Similarly, although we will be collecting information on attorney behaviors ($B$) in this study for the purpose of control measures, we will not examining these behaviors as a primary predictor of interest. 
 
 Figure 1 also constructs a series of dashed lines representing direct effects between constructs (in addition to the mediation effects implied by Figure 1). In this way we are proposing a more plausible partial mediation model; one in which direct and indirect effects exist [see @Baron1986 for a seminal treatment of this and related topics]. Figure 2 also adds a generic confounding variable ($C$) to make clear that several demographic factors (e.g. age at entry) likely exist which are related to attorney behaviors, process activities, and child outcomes. 
 
@@ -215,21 +218,19 @@ square/.style={regular polygon,regular polygon sides=4,fill=blue,draw=none,text=
 
 ## Sampling Plan
 
-As it has been largley designed within the aforementioned proviso, the sampling plan in this study is ostensibly simple - compare the outcomes of dependent children in Grant and Lewis with the dependent children in Whatcom and Douglas. However, this sampling plan is complicated by at least two factors: 1. the amount of resources devoted to this project, and 2. the number of dependent children we can reasonably expect to observe in the pilot counties. 
+As it has been largely designed within the aforementioned proviso, the sampling plan in this study is ostensibly simple - compare the outcomes of dependent children in Grant and Lewis with the dependent children in Whatcom and Douglas. However, this sampling plan is complicated by at least two interrelated factors: 1. the amount of resources devoted to this project, and 2. the number of dependent children we can reasonably expect to observe in the pilot counties. 
 
-### Exected Study Duration
+### Study Resources
 
-Although the pilot has adequete funding to sustain legal representation (in terms of attorney salaries) within Grant and Lewis counties, it is unlikely that the pilot has enough funds to maintain representation for these children through the end of their dependencies. This issue is described some in the following app which simulates dependency caseloads within Lewis and Grant: [Pilot Simulation Tool](https://pocdata.shinyapps.io/legal_rep_planning/). As stated within the app, and in the aforementioned legislation, the total budget of the pilot is currently \$1,296,000; \$648,000 for each half of the current biennium. By the end of the current month, we estimate that as much as much as \$330,000 will have been expended. 
+Although the pilot has adequate funding to sustain legal representation (in terms of SBLRF-attorney salaries) within Grant and Lewis counties, it is unlikely that the pilot has enough funds to maintain representation for these children through the end of their dependencies. This issue is described some in the following app which simulates dependency caseloads within Lewis and Grant: [Pilot Simulation Tool](https://pocdata.shinyapps.io/legal_rep_planning/). As stated within the app, and in the aforementioned legislation, the total budget of the pilot is currently \$1,296,000; \$648,000 for each half of the current biennium. By the end of the current month, we estimate that as much as much as \$330,000 will have been expended. As of this writing, the OCLA team has not made a firm decision as to when the pilot SBLRF-attorneys should stop taking new cases. However, with the following assumptions: 
 
-With the following assumptions: 
-
-1. OCLA attorneys will not exceed 60 cases per attorney, 
-2. Annual attorney salaries will remain at \$120,000 per 60 cases,  
-3. Attorneys will remain assigned to dependent children until their dependencies close, or they become legally free,  
+1. SBLRF-attorneys will not exceed 60 cases per attorney, 
+2. Annual SBLRF-attorney salaries will remain at \$120,000 per 60 cases,  
+3. SBLRF-attorneys will remain assigned to dependent children until their dependencies close, or they become legally free,  
 4. That children enter to and exit from dependency at roughly the same rate that they have since 2010, and 
-5. That OCLA will continue to assign attorneys to new children until projected funds are expended, 
+5. That OCLA will continue to assign SBLRF-attorneys to new children until projected funds are expended, 
 
-```{r}
+```{r power_analysis, message=FALSE, warning=FALSE, paged.print=FALSE, cache=TRUE, echo=FALSE}
 library(metafor)
 source("global.r")
 set.seed(12345)
@@ -369,29 +370,84 @@ ss_2yr <- sample_size_calcs(stop_date_sim = 20200601, meta_effect = res$b)
 
 ```
 
-We estimate that OCLA will need to stop taking new cases in January of 2019. While the research team is hopeful that additional funds will be appropriated to continue gathering data into the next bienium, we cannot be certain that such an appropriation will take place. As such, our sampling plan is written from a "worst case" data collection scenario; assuming that no new funds will be appropriated. 
+we estimate that OCLA will need to stop taking new cases in January of 2019, or risk an overspend. While the research team is hopeful that additional funds will be appropriated to continue gathering data into the next biennium, we cannot be certain that such an appropriation will take place. As such, our sampling plan is written from a "worst case" data collection scenario; assuming that no new funds will be appropriated. 
 
-Although we have plans to estimate treatment effects across a wide array of outcomes, we have focused power calculations on permanency outcomes. This focus was chosen because permanency outcomes have been the focus of the limited number of studies which have been conducted in this domain. In terms of potential cost differentials resulting from attorney assignment, permanency outcomes are also one of the most direct mechanisms through which other outcomes (e.g. costs) will be impacted as the result of the pilot. In other words, if we don't have sufficient power to observe permanency effects, it is unlikely that we will be able to draw inference related to other more distal outcomes. 
+### Expected Exits in Pilot Sites, as Planned
 
-Using effect sizes from @Orlebeke2016 and @Zinn2015, we first estimated "meta-effects" as outlined by @Follmann1999, and as implemented by @Viechtbauer2010 in the `metafor` package. The results of this analysis gives us reason to expect that dependent children with trained legal representatives will acheive permanency more quickly than children with untrained legal representatives [@Orlebeke2016] or no legal representation at all [@Zinn2016]. The average "hazard ratio" across both of these studies (HR = `r round(exp(res$b), 2)`) suggests that there is a `r scales::percent(exp(res$b)/(1+exp(res$b)))` chance that represented children will acheive permanency before unrepresented children. 
+Although we have plans to estimate treatment effects across a wide array of outcomes, we have focused power calculations on permanency outcomes. This focus has been chosen because permanency outcomes have been the focus of the limited number of studies which have been conducted in this domain. Furthermore, in terms of potential effects resulting from attorney assignment, permanency outcomes are one of the most direct mechanisms through which other outcomes (e.g. costs) will be impacted as the result of the pilot. If we don't have sufficient power to observe permanency effects, it is unlikely that we will be able to draw inference related to other more distal outcomes. 
 
-Using standard parameters for the probability of Type I and Type II errors (.05 and .20 respectively), @Schoenfeld1983 provides formulas for the calculation of required sample sizes in the context of event history modeling. Specifically, given the aforementioned effect size, we would require `r round(ss_no$events_needed, 0)` observed permanency events in order to have confidence in our analysis from the standpoint of statistical power. 
+Using effect sizes from @Orlebeke2016 and @Zinn2015, we first estimated "meta-effects" as outlined by @Follmann1999, and as implemented by @Viechtbauer2010 in the `metafor` package. The results of this analysis gives us reason to expect that dependent children with trained legal representatives will achieve permanency more quickly than children with untrained legal representatives [@Orlebeke2016] or no legal representation at all [@Zinn2015]. The average "hazard ratio" across both of these studies (HR = `r round(exp(res$b), 2)`) suggests that there is a `r scales::percent(exp(res$b)/(1+exp(res$b)))` chance that represented children will achieve permanency before unrepresented children. 
 
+Using standard parameters for the probability of Type I and Type II errors (.05 and .20 respectively), @Schoenfeld1983 provides formulas for the calculation of required sample sizes in the context of event history modeling. Specifically, given the aforementioned effect size, we would require `r round(ss_no$events_needed, 0)` observed permanency events in order to have confidence in our analysis from the standpoint of statistical power. By the time the December 2019 report is due to the legislature, however, we estimate that we will have only observed `r round(ss_no$total_exits, 0)` permanency events and a target survey sample of approximately `r round(ss_no$total_survey, 0)` children. In other words, as designed by the legislature, the current study is under powered. 
 
+### Expected Exits in Pilot Sites, as Predicted with Additional Resources
 
-most likely outcome to 
+If additional funds are appropriated for this project during the 2019 legislative session, it is likely that we will observe enough permanency events to achieve the statistical power of `r round(ss_no$events_needed, 0)` events. Specifically, with another year of funding, we would expect that the pilot could continue assigning attorneys through January of 2020. Assuming a similar reporting timeline to the current proviso, we could reasonably expect to have observed `r round(ss_1yr$total_exits, 0)` permanency events by December of 2020. With two additional years of funding, we could continue assigning attorneys through June of 2020, with `r round(ss_2yr$total_exits, 0)` permanency events by April of 2021. 
 
-Under this assumption (no new cases beyond January of 2019), we estimate that `r round(ss_no$total_entries, 0)`
+This would also allow us to continue to collect responses to our youth exit survey. With one more year of funding (and a commensurate period of follow-up), we could reach a target sample of approximately `r round(ss_1yr$total_survey, 0)` children. With two more years of funding, we could reach a target sample of approximately `r round(ss_2yr$total_survey, 0)`.
 
+### Plans to Accomodate Low Statistical Power
+
+Ideally, this project will receive continued funding and we can continue data collection into 2020 or even 2021. In the meantime, however, we intend to be responsive to the larger evaluative question of the legislature using a larger sample of represented and non-represented children in the Washington dependency population. Specifically, we define four populations of interest for the current project: 
+
+#### The Pilot Cohort
+
+The pilot cohort is defined as all children for whom dependency petitions are filed between September of 2017 and January of 2019. The pilot cohort is limited to children who fall within the jurisdiction of Douglas, Whatcom, Lewis, and Grant counties. In the event that the pilot is extended, the collection period will also be extended to align with the new stop date of the pilot. Within current study parameters, we estimate that `r round(ss_no$total_entries, 0)` children will enter the pilot cohort. 
+
+#### The Pilot Cohort - Survey
+
+A subset of the pilot cohort, children ages eight and above at dependency dismissal, will also be sampled for exit interviews. Youth exit survey data will be collected through November of 2019. Similar to the larger pilot cohort, the survey collection period will also be extended in the event that new funds are appropriated. Within current study parameters, we estimate that `r round(ss_no$total_survey, 0)` children will be eligible for participation in the survey.
+
+#### The Pilot Cohort - Plus
+
+While our intention is to limit initial analyses of the Pilot Cohort to Douglas, Whatcom, Lewis, and Grant, we intend to conduct this analysis through the use of a propensity score model. Historically, Douglas has had extremely low rates of dependency filings and all four counties have variable trends in their dependency data. As such, it is possible that we may not gain enough matches from a propensity score model limited to these four counties. Although we intend to restrict Pilot Cohort analyses to Lewis and Grant in terms of "treatment" cases, we will also conduct sensitivity analyses which attempt to find control cases from all counties in the state. Thus, the Pilot Cohort - Plus sample is identical to the Pilot Cohort, except that it is not limited to children who fall within the jurisdiction of Douglas, Whatcom, Lewis, and Grant counties. 
+
+#### The State Cohort
+
+The State Cohort will focus on a variety of analyses which are supplmentary to Pilot Cohort models. While there is only one formal pilot in operation right now, children currently receive legal representation in a variety of ways outside of the formal pilot.   
+
+For example, in 2010, the legislature passed a requirement that dependent children 12 years and older be informed of their right to request counsel. While this law does not guarantee a right to counsel for these children, it has expanded the practice by giving the right to request such counsel.
+
+In addition to a child's right to request counsel at the age of 12, some jurisdictions routinely appoint counsel for children in dependency proceedings. For example, since October of 2005, King County appoints attorneys for all children starting at age 12 (King County LJuCR 2.4(a)). More recently, in 2016, Benton/Franklin County has begun appointing attorneys for all children starting at age 8. This was an expansion of Benton/Franklin's 2015 policy which appointed attorneys at the age of 9 (Benton County LJuCR 9.2(A)(1)).
+
+As can be seen, there is variation throughout the state in how children are assigned attorneys in dependency proceedings. Our goal with the state cohort is to exploit this variation through one or more quasi-experimental studies as described in more detail below.
+
+The State Cohort will focus on cases for whom dependency petitions were filed between October of 2005 and January of 2019. This approach will ensure that we are able to examine the earliest known legal representation policy in King County. Data from FamLink suggest that the State Cohort will include around 72,000 distinct children. Most of these children will not have any identifiable legal represenative, much less a SBLRF-attorney. Nonetheless, the sample should provide more than enough statistical power given our expected effect size. 
+
+Using multiple quasi-experimental approaches, State Cohort analyses will be used to conjunction with the Pilot Cohort analyses in order to make use of all available information. Assuming analyses from the State Cohort are consistent with analyses from the Pilot Cohort in terms of direction and magnitude, the analyses from all cohorts can be used to provide legislators with all available information regarding the effects of legal representation. 
 
 ## Major Variables of Interest
 
 ## Statistical Analyses
 
+\newpage
 # Data Collection Procedures
 
-\newpage
-## Data Integration
+## Contact with Human Subjects
+
+### What
+
+Child respondents will be asked to complete the Youth Exit Survey (YES) online. A working sample of the survey is available [here](https://surveys.partnersforourchildren.org/surveys/?s=TEPC7LY94A), and is also included in Appendix K. This survey is hosted by the SSW on a REDCap server. 
+
+Prior to completing the YES, the permanent caregiver of the child will be contacted using contact information contained within SCOMIS. The caregiver will be asked to consent to their child's participation in the YES using the consent form submitted with this application. If the contact information is not valid or is outdated, attorneys for the caregiver (where applicable) will be contacted to obtain more recent contact information. In the case of Grant and Lewis, the child's attorney may also be contacted to determine the most recent contact information. 
+
+If the local courts are amenable, recruitment may also take place through the use of flyers or other recruitment literature displayed within the local court house. The research team is also in preliminary conversations with the parents 4 parents (P4P) program in Whatcom. It is possible that staff from P4P may also assist in the recruitment of child respondents. If such assistance ultimately becomes feasible, relevant P4P staff will be added to the research team.  
+
+Once parental consent is obtained, the child will be asked to assent to their participation in the study using the assent form also submitted with this application. If the child appears and feels capable of completing the YES on their own, they are allowed to do so. If they request assistance, or appear to require assistance, a member of the research team will assist them in completing the YES via phone, or in person depending on the manner in which the caregiver and child were contacted. 
+
+### Who
+
+As implied above, the YES may be completed with one of three different modalities: guided completion over the telephone, guided completion in-person, or self-paced completion. The guided completion options will involve a member of the research team reading and/or clarifying the survey questions with the respondent child. Under these scenarios, the member of the research team will be personally completing the questions based on the responses of the respondent child. 
+
+### Where
+
+As stated above, with permission of the local Superior Courts, some recruitment may take place within the local court houses. However, given the geographic dispersion of the pilot locations, we anticipate that most recruitment will be done over the phone. Similarly, when assistance is required for survey completion, we anticipate that most of the assistance will take place over the phone. In the event that permission is obtained to actively recruit within local court houses, the research team will file an ammendment to add an Appendix L to this project, along with any recruitment literature which will also be submitted for review. 
+
+### When
+
+As described in more detail below, the research team will be notified via weekly report of pending and completed dependency dismissals. This report will also contain contact information for all attorneys assigned to the case at dismissal, and the last known contact information for the child's permanent caregiver. Ideally, the child will be able to complete the survey within one week of their dismissal date. During the first year of data collection, we estimate that no more than 2 respondents will exit from dependency each week. 
+
+## Identifiable Records
 
 ### Agencies Holding Data
 
@@ -470,13 +526,176 @@ Upon the receipt of the aforementioned de-identified extracts, each extract will
 
 ### Identifiers to be Used to Link Records
 
-As outlined above, within the Project DB, records will be identified using either the `ID_PRSN` field or the OSPI-generated research ID. Prior to reaching the Project DB, records will be integrated using a combination of deterministic and probabilistic techniques involving the fields of data outlined in the Linkage Process A section above. 
+As outlined above, within the Project DB, records will be identified using either the `ID_PRSN` field or the OSPI-generated research ID. Prior to inclusion in the Project DB, records will be integrated using a combination of deterministic and probabilistic techniques involving the fields of data outlined in the Linkage Process A section above. 
 
+\newpage
+
+## Study Subjects
+
+### Expected Number of Subjects
+
+As outlined above, there are four distinct populations of interest: The Pilot Cohort, The Pilot Cohort - Survey, The Pilot Cohort - Plus, and The State Cohort. As described in more detail above, summary counts for each of these populations is provided in Table 2. These estimates assume no changes to the current legislative requirements of this study. 
+
+```{r table2, results=TRUE, echo=FALSE, cache=TRUE}
+
+df <- data_frame(Expectation = c("Pilot Cohort"
+                                  ,"Pilot Cohort - Survey"
+                                  ,"Pilot Cohort - Plus"
+                                  ,"State Cohort") 
+                 ,Population = c(round(ss_no$total_entries, 0)
+                   ,round(ss_no$total_survey, 0)
+                   ,round(ss_no$total_entries, 0)
+                   ,"75,000")
+)
+
+knitr::kable(df, "latex", booktabs = T, caption = "Sample Estimates, by Population") %>%
+  kableExtra::kable_styling(position = "center")
+```
+
+### Inclusion Criteria
+
+#### State Cohort
+
+The largest population of interest in the study is the State Cohort. Children for this study will be included if they entered care after the start of the King County judicial rule which provides legal representation to all children over the age of 12. That said, we will not restrict this population on the basis of age as children who enter care under the age of 12 may still be in care once they reach the age of 12. Thus, inclusion in the State Cohort is defined as **having a removal in which the removal date is greater than or equal to October 1, 2005**. 
+
+#### Pilot Cohort
+
+The Pilot Cohort is a perfect subset of the State Cohort. Three additional restrictions are applied to the State Cohort in order to define the Pilot Cohort population. These additional restrictions are as follows: 
+
+* **1. The child must have had a removal date between September of 2017 and January of 2019 as recorded in FamLink records,** 
+* **2. The child must have had an associated dependency petition as recorded in SCOMIS records, and** 
+* **3. The child's dependency case must be under the jurisdiction of Lewis, Grant, Whatcom, or Douglas.**
+
+##### Pilot Cohort - Plus
+
+As stated above, although we intend to restrict Pilot Cohort analyses to Lewis and Grant in terms of "treatment" cases, we will also conduct sensitivity analyses which attempt to find control cases from a propensity score model using all counties in the state. Thus, the Pilot Cohort - Plus sample is **identical to the Pilot Cohort, except that it is not limited to children who fall within the jurisdiction of Douglas, Whatcom, Lewis, and Grant counties.** 
+
+##### Pilot Cohort - Survey
+
+In addition to the aforementioned restrictions, the survey subset of the Pilot Cohort will be additionally restricted by age. Specifically, **a child will need to be eight years of age or older on the day of discharge in order to participate in the survey.**
+
+### Exclusion Criteria
+
+As stated above, a child will need to be eight years of age or older on the day of discharge in order to participate in the survey subset of the Pilot Cohort. Thus, children under the age of eight are excluded from the survey portion of the study. 
+
+In addition to age, the core Pilot Cohort population does not include children who are subject to jurisdictions outside of the identified pilot counties. 
+
+Although children represented by attorneys without SBLRF certification may be included in sensitivity analyses as a control measure, these children are not considered to be a part of our exposure variable. As such, **for some analyses, we will likely exclude children who are represented by an attorney who does not have SBLRF certification.** 
+
+### Age Group Limitation
+
+As stated above, we are limiting the survey to children who are eight years of age or older on the day of discharge. This restriction is necessary to ensure that survey respondents are able to comprehend the survey. 
+
+### ESL
+
+Based on prior survey work with this population, we have good reason to believe that there is a very low prevalance of non-english speaking children in the Washington child welfare system. If this assumption proves faulty throughout our data collection work, we will adjust the survey protocol through an ammendment to this application. 
+
+### Recruitment
+
+#### Identification 
+
+##### Process
+
+The SCOMIS database will be used, on a weekly basis, to select the sample in accordance with the sampling plan described above. If multiple children are identified for a single caregiver, all associated children will be recruited for participation. The recruitment prioritization process will proceed as follows: 
+
+**Primary Process** - After confirming that a guardian's children have not already been recruited through the secondary recruitment process outlined below. The research team member will use contact information from the report to directly attempt contact with the identified guardian for a child(ren), as outlined below. 
+
+**Secondary Process** - In addition to the above, with the permission of local courts, recruitment materials will be displayed on public announcement areas (e.g. bulletin boards) within the county court houses. These materials will explain the eligibility criteria, and provide contact information for the research team. If an individual contacts the research team on the basis of these recruitment materials, the team member will confirm that a guardian's children have not already been recruited through the primary recruitment process outlined above. If permission is not gained from a given local court, no secondary recruitment process will be employed for that court (See Appendix F for the recruitment flyer).
+
+For each guardian recruited, the following information will be compiled in the YES database: guardian name, child name, gender, date of birth, address, phone number, and email address. The guardian name, child name, and gender will be used for the purpose of recruitment and to assist in data linkages under Linkage Process B outlined above. 
+
+**Adult Recruitment Process** - For children who have exited the dependency process due reaching the age of majority (i.e. "aging out") or due to their having acheived status as an emancipated minor, contact will be attempted identically to the guardian contact process.  
+
+#### Gaining Consent
+
+##### Primary Recruitment Process
+
+**Opt Out Letters** - Upon receipt of the weekly SCOMIS report, the research team will send "opt out" letters using certified mail, with a return receipt requested (See Appendix F for the opt out letter). The purpose of the opt out letter is to inform guardians of the purpose of the study, to assure them of confidentiality, and to give them the opportunity to decline participation in the study. If guardians do not opt out at this point they can still elect to leave the study at any point in the study process. Contact information for parents who do not opt out or for whom the letters are not returned undeliverable, will be contacted with an Advance Letter as described below.
+
+**Undeliverable Opt Out Letters** - If an opt out letter is returned underliverable, the guardian's personal attorney will be contacted. The team member will identify the attorney using information from the SCOMIS report, in conjunction with Washington State Bar Association records to contact the personal attorney. Upon contact with the attorney, the team member will determine if the attorney is willing to serve as an contact intermediary, between the research team and the guardian. If the attorney is amenable, the guardian will be sent an opt-out letter as described above, but with the personal attorney making the submission to ensure confidentiality. 
+
+If the team member is unable to contact the guardian's personal attorney (or if the guardian was not a party to the dependency), the team member will attempt to contact the child's attorney (where assigned) and repeat the process outlined above.
+
+When 15 days have elapsed between the date that a guardian attorney (or child attorney) agree to attempt contact, the research team will make an additional attempt to contact the attorney to confirm that the attorney has 1. received relevant return receipts, and 2. that no contact has been made by the guardian to opt out of the study. For guardians who meet both of these criteria, they will be contacted with an Advance Letter as outlined below.  
+
+##### Advance Letter
+
+Using information gathered through the opt our letter process, the research team will next send an Advance Letter to the relevant guardians (see Appendix F for Advance Letter). The purpose of the advance letter is to briefly explain the study, assure confidentiality and describe the YES survey. The letter will inform the guardian of the compensation for their child's time and effort in responding to the survey. A telephone number and email address for the research team will be listed for any questions. 
+
+**Primary Recruitment Process** - One week after the advance letter is mailed, a research team member will begin attempting to contact guardians by phone or email to schedule an appointment for the purpose of explaining the research. This is a highly mobile population and it is likely that for some percentage of respondents the phone numbers, addresses, or email addresses will not be current. If this is the case, any attorneys involved in the recruitment process will be re-contacted for updated contact information. The research team will also search publically available databases to update contact information.
+
+Upon contacting guardians, the research team member will confirm that they are speaking to the guardian. They will explain the reason for their phone call and ask if it is okay schedule an appointment to tell them more about the study. If the parent agrees, a mutually determined time will be scheduled.
+
+During the scheduled telephone appointment, the guardian will be provided with an opportunity to ask any outstanding questions of the research team. If the parent agrees to have their child proceed with the YES, the text of the parental consent letter will be read to the guardian. If the guardian consents to their child's participation in the study, the research team member will gain a verbal affirmation of the consent. The verbal affirmation will be recorded in the YES database. 
+
+**Secondary Recruitment Process** - For guardians who contact the research team using the secondary recruitment process, a member of the research team will schedule time for an introductory phone call with the guardian. During this call, the research team will read the text of the opt out letter to the parent. If the guardian agrees to proceed, during the same phone call, the text of the advance letter will also be read to the guardian. After having been read the advance letter, if the guardian agrees to proceed, the text of the parental consent letter will be read to the guardian. If the guardian consents to their child's participation in the study, the research team member will gain a verbal affirmation of the consent. The verbal affirmation will be recorded in the YES database. 
+
+**Adult Recruitment Process** - For children who have exited the dependency process due reaching the age of majority (i.e. "aging out") or due to their having acheived status as an emancipated minor, the advance letter information will be communicated identically to the process for informing guardians outlined above. 
+
+##### Determining Survey Modality
+
+If the research team member and guardian confirm that the child respondent is capable of completing the YES independently, the research team member will provide the child respondent with a link to the survey. The link will be provided verbally, by email, or by SMS message depending on the stated preference of the guardian. 
+
+If the research team member and guardian confirm that the child respondent is not capable of completing the YES independently, the research team member will schedule a time for a member of the research team to set up a telephone interview with the child in which the child will be read questions from the survey and responses to the questions will be recorded by the research team in the YES database. 
+
+##### Completing the Survey
+
+**Independent Completion** - All respondents (adult or child) who independently complete the survey online will follow the provided survey link into any modern web browser. The link will first take the respondent to a page in which the respondent to a consent/assent page prior to being presented with any survey questions. 
+
+At the completion of the survey, the respondent will be asked to choose whether they would like to have their gift card sent to them by mail, or if they would like to receive an electronic gift card that they can receive immediately upon the completion of the survey. 
+
+**Interviewer-Guided Completion** - All respondents (adult or child) who complete the survey with an interviewer from the research team will be contacted as scheduled through the processes above. Upon contacting respondent, the interviewer will confirm that they are speaking to the appropriate person. They will explain the reason for their phone call and ask if it is okay to continue the interview. If the respondent agrees, the respondent will be asked to complete a verbal assent/consent process in which the text of the child assent/consent form will be read to the respodnent. If the respodnent consents to participate in the study, the research team member will gain a verbal affirmation of the consent. The verbal affirmation will be recorded in the YES database. 
+
+After the affirmation, the interviewer will read the questions verbatim to the respondent. At the completion of the survey, the respondent will be asked to choose whether they would like to have their gift card sent to them by mail, or if they would like to receive an electronic gift card that they can receive immediately upon the completion of the survey. 
+
+#### Location of Recruitment
+
+As described above, the location of the recruitment will take place using a combination of public postings, telphone conversations, and regular US mail. 
+
+#### Person Making Contact
+
+The individual primarily responsible with making contact with respondents in this study is Jooree Ahn. Jooree is a trained social worker who has been participating in various child welfare sytem research projects for several years. Jooree has an MSW and an MPH degree and has participated in multiple survey projects involving child welfare clients in the State of Washington. She is more than qualified to manage the recruitment effort of this project. 
+
+In the event that additional persons are added to the team to assist in interviewing or recruitment efforts, these interviewers will be supervised by Jooree. For the duration of the field period, the PI will weekly with Jooree (or other interviewers a needed) to debrief, answer questions, and provide feedback regarding data quality.  
+
+#### Protecting Privacy During Recruitment
+
+The YES database will be maintained within a REDCap database managed by the research team at the SSW. The database is accessed through a web interface which is vended by a server utilizing an HTTPS/SSL standard. In other words, all communications with the YES database will be encrypted. When data are transmitted to AOC for integration, transmissions shall be made through SFTP, or a more secure protocol. 
+
+#### Minimizing Undue Influence
+
+The fact that the individuals are being contacted after the completion of their dependency will help to ensure undue influence in the decision to complete the survey. DCYF, the agency which served as the petitioner in the prior dependency case is not involved in the recruitment process and the family has already been informed by the court that their "case is closed". 
+
+Additionally, the consent and assent forms include an explanation that "the decision on participation in this research will in no way change prior case decisions for your child, or services provided to your child in the future." The assent document makes a similar statement.
+
+#### Subject Compensation
+
+Respondents will receive $50 in appreciation for their time at the completion of the interview or at any point they request to end the interview.
+
+Guardians will also receive $50 in appreciation for their time at the completion of the interview or at any point the child respondent requests to end the interview.
+
+#### Subject Understanding
+
+In both modes of survey completion the respondent will be asked to confirm their understanding of study procedures, study risks, and study benefits prior to the completion of the survey. 
+
+After being prompted to confirm their understanding, if the respondent (either verbally or by response to the website prompt) indicates that they do not understand, the information will be communicated to the respondent one more time, followed by an additional prompt for understanding. 
+
+If the respondent makes a second response (either verbally or by response to the website prompt) indicating that they do not understand, they will be thanked for their time, and asked for a preference regarding compensation for their time. 
 
 ```{r fig4, fig.cap = "Data Integration Plan", results=TRUE, echo=FALSE, out.extra='', cache=TRUE}
 
 knitr::include_graphics('./data_linkage_diagram.png')
 
 ```
+
+\newpage
+# Survey Documents
+
+```{r doc_tbl, results=TRUE, echo=FALSE, message=FALSE, cache=TRUE}
+source("appendix_f_script.R")
+get_readability(team_drive = googledrive::team_drive_find("legal_rep"))
+
+```
+
 \newpage
 # References
