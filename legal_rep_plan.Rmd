@@ -13,10 +13,10 @@ header-includes:
 - \usepackage{newlfont}
 - \usepackage{fancyhdr}
 output:
+  word_document: default
   pdf_document:
     latex_engine: pdflatex
     pandoc_args: --pdf-engine-opt=--shell-escape
-  word_document: default
 bibliography: legal_rep_plan.bib
 ---
 

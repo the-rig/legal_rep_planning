@@ -1,0 +1,15 @@
+base
+Matrix
+metafor
+shiny
+htmltools
+shinyWidgets
+feather
+dplyr
+ggplot2
+tidyr
+lubridate
+stringi
+stringr
+scales
+bindrcpp
